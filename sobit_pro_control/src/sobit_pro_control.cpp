@@ -22,8 +22,6 @@ void SobitProControl::setParams( geometry_msgs::Twist vel_twist ){
             double steer_fl_deg, steer_fr_deg, steer_bl_deg, steer_br_deg;
 
             if( (-45 <= goal_deg) && (goal_deg <= 45) ){
-                ROS_INFO("here1");
-                
                 steer_fl_deg = -45. - goal_deg; // rad = deg * (M_PI / 180.)
                 steer_fr_deg =  45. - goal_deg; // rad = deg * (M_PI / 180.)
                 steer_bl_deg =  45. - goal_deg; // rad = deg * (M_PI / 180.)
@@ -44,8 +42,6 @@ void SobitProControl::setParams( geometry_msgs::Twist vel_twist ){
             }
 
             else if( (45 < goal_deg) && (goal_deg <= 135) ){
-                ROS_INFO("here2");
-
                 steer_fl_deg = 135. - goal_deg; // rad = deg * (M_PI / 180.)
                 steer_fr_deg = 45.  - goal_deg; // rad = deg * (M_PI / 180.)
                 steer_bl_deg = 45.  - goal_deg; // rad = deg * (M_PI / 180.)
@@ -66,8 +62,6 @@ void SobitProControl::setParams( geometry_msgs::Twist vel_twist ){
             }
 
             else if( (-45 > goal_deg) && (goal_deg >= -135) ){
-                ROS_INFO("here3");
-
                 steer_fl_deg = -45.  - goal_deg; // rad = deg * (M_PI / 180.)
                 steer_fr_deg = -135. - goal_deg; // rad = deg * (M_PI / 180.)
                 steer_bl_deg = -135. - goal_deg; // rad = deg * (M_PI / 180.)
@@ -89,16 +83,12 @@ void SobitProControl::setParams( geometry_msgs::Twist vel_twist ){
 
             else if( (135 < goal_deg && goal_deg <= 180) || (-135 > goal_deg && goal_deg >= -180.005) ){
                 if( (135 < goal_deg) && (goal_deg <= 180) ){
-                    ROS_INFO("here4");
-
                     steer_fl_deg = 135. - goal_deg; // rad = deg * (M_PI / 180.)
                     steer_fr_deg = 225. - goal_deg; // rad = deg * (M_PI / 180.)
                     steer_bl_deg = 225. - goal_deg; // rad = deg * (M_PI / 180.)
                     steer_br_deg = 135. - goal_deg; // rad = deg * (M_PI / 180.)
                 }
                 if( (-135. > goal_deg) && (goal_deg >= -180.005) ){
-                    ROS_INFO("here5");
-                    
                     steer_fl_deg = -225. - goal_deg; // rad = deg * (M_PI / 180.)
                     steer_fr_deg = -135. - goal_deg; // rad = deg * (M_PI / 180.)
                     steer_bl_deg = -135. - goal_deg; // rad = deg * (M_PI / 180.)
