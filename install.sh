@@ -4,7 +4,7 @@ echo "╔══╣ Setup: SOBIT PRO (STARTING) ╠══╗"
 
 
 # Keep track of the current directory
-CURRENT_DIR=`pwd`
+DIR=`pwd`
 cd ..
 
 # Download required packages for SOBIT PRO
@@ -30,6 +30,11 @@ for ((i = 0; i < ${#ros_packages[@]}; i++)) {
     fi
 }
 
+# Download required dependencies
+sudo apt-get update
+sudo apt-get install -y \
+    mpg321 
+
 # Download ROS packages
 sudo apt-get update
 sudo apt-get install -y \
@@ -44,10 +49,10 @@ sudo apt-get install -y \
     ros-$ROS_DISTRO-controller-interface \
     ros-$ROS_DISTRO-controller-manager \
     ros-$ROS_DISTRO-tf2 \
-    ros-$ROS_DISTRO-tf2-ros
-
-# Install joy package
-sudo apt-get install -y \
+    ros-$ROS_DISTRO-tf2-ros \
+    ros-$ROS_DISTRO-sensor-msgs \
+    ros-$ROS_DISTRO-trajectory-msgs \
+    ros-$ROS_DISTRO-geometry-msgs \
     ros-$ROS_DISTRO-joy
 
 
@@ -71,7 +76,7 @@ sudo udevadm control --reload-rules
 sudo udevadm trigger
 
 # Go back to previous directory
-cd ${CURRENT_DIR}
+cd ${DIR}
 
 
 echo "╚══╣ Setup: SOBIT PRO (FINISHED) ╠══╝"
