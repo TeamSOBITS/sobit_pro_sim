@@ -519,7 +519,7 @@ TBD
     - [x] Improved documentation
     - [x] Unified coding style
 
-See the [open issues][license-url] for a full list of proposed features (and known issues).
+See the [open issues][issues-url] for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
