@@ -1,34 +1,37 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 import sys
 
 import rospy
+
+from sensor_msgs.msg import Joy
 from geometry_msgs.msg import Twist
+
 from sobit_pro_module import SobitProWheelController
 from sobit_pro_module import SobitProJointController
 from sobit_pro_module import Joint
 
-import sensor_msgs.msg
 
-
-class Ps4_Control:
+class JoyControl:
     def __init__(self):
-        self.sub_joy = rospy.Subscriber('/joy', sensor_msgs.msg.Joy, self.subscribe_joy, queue_size=10)
+        self.sub_joy           = rospy.Subscriber('/joy', Joy, self.subscribe_joy, queue_size=10)
         self.pub_wheel_control = rospy.Publisher('/mobile_base/commands/velocity', Twist, queue_size = 10)
 
+        # Init SobitProWheelController and SobitProJointController
         self.args = sys.argv
         self.pro_wheel_ctrl = SobitProWheelController(self.args[0])
         self.pro_joint_ctrl = SobitProJointController(self.args[0])
 
+        # Set initial values
         self.tilt_ang = 0.0
         self.pan_ang  = 0.0
         self.time     = 3.0
 
-        # rate
+        # ROS rate
         self.rate = rospy.Rate(10)
 
-        # subscriberのメッセージを受け取る変数
+        # Parameters
         self.joy_button        = [0] * 17
         self.left_joystick_lr  = 0
         self.left_joystick_ud  = 0
@@ -44,94 +47,76 @@ class Ps4_Control:
         self.right_joystick_lr = msg.axes[3] * self.magnifications
         self.right_joystick_ud = msg.axes[4] * self.magnifications
 
-        # L2ボタンが押される
+        # L2 button is pressed
         if self.joy_button[6]:
             self.move_wheel_stop_motion()
-
-            # print("回転運動(左回り)")
             self.move_wheel_rotational_motion(0.3)
 
-        # R2ボタンが押される
+        # R2 button is pressed
         elif self.joy_button[7]:
             self.move_wheel_stop_motion()
-
-            # print("回転運動(右回り)")
             self.move_wheel_rotational_motion(-0.3)
 
-        # ○ボタンが押される
+        # Circle button is pressed
         elif self.joy_button[1]:
             self.move_wheel_stop_motion()
 
-            # print("１回転(右回り)")
             for i in range(4):
                 self.pro_wheel_ctrl.controlWheelRotateDeg(90)
 
-        # 並進運動
+        # Mode: translational motion
         elif msg.axes[1] > 0:
             self.move_wheel_stop_motion()
-
-            # while not msg.axes[0]== 0.0:
-            # print("並進運動")
             self.move_wheel_translational_motion(0.8)
             self.rate.sleep()
 
-        # 右スティックを上に傾ける
+        # Right stick is tilted up
         elif msg.axes[4] > 0.8:
             self.move_wheel_stop_motion()
 
-            # print("カメラパンチルト（上）")
-            if self.tilt_ang >= 0.6: self.tilt_ang = 0.6
-            else: self.tilt_ang += 0.015
+            self.tilt_ang += 0.015 if self.tilt_ang < 0.6 else 0
 
-            # カメラパンチルトを動かす
+            # Move the camera tilt
             self.pro_joint_ctrl.moveJoint( Joint.HEAD_TILT_JOINT, self.tilt_ang, self.time, False )
             self.rate.sleep()
-            # print(self.tilt_ang)
 
-        # 右スティックを下に傾ける
+        # Right stick is tilted down
         elif msg.axes[4] < -0.8:
             self.move_wheel_stop_motion()
 
-            # print("カメラパンチルト（下）")
-            if self.tilt_ang <= -0.6: self.tilt_ang = -0.6
-            else: self.tilt_ang += -0.015
+            self.tilt_ang += -0.015 if self.tilt_ang > -0.6 else 0
 
-            # カメラパンチルトを動かす
+            # Move the camera tilt
             self.pro_joint_ctrl.moveJoint( Joint.HEAD_TILT_JOINT, self.tilt_ang, self.time, False )
             self.rate.sleep()
-            # print(self.tilt_ang)
 
-        # 右スティックを左に傾ける
+        # Right stick is tilted left
         elif msg.axes[3] < -0.8:
             self.move_wheel_stop_motion()
 
-            # print("カメラパンチルト（左）")
-            if self.pan_ang <= -0.6: self.pan_ang = -0.6
-            else: self.pan_ang += -0.015
+            self.pan_ang += -0.015 if self.pan_ang > -0.6 else 0
 
-            # カメラパンチルトを動かす
+            # Move the camera pan
             self.pro_joint_ctrl.moveJoint( Joint.HEAD_PAN_JOINT, self.pan_ang, self.time, False )
             self.rate.sleep()
             # print(self.pan_ang)
 
-        # 右スティックを右に傾ける
+        # Right stick is tilted right
         elif msg.axes[3] > 0.8:
             self.move_wheel_stop_motion()
 
-            # print("カメラパンチルト（右）")
             if self.pan_ang <= 0.6: self.pan_ang = 0.6
             else: self.pan_ang += 0.015
 
-            # カメラパンチルトを動かす
+            self.pan_ang += 0.015 if self.pan_ang > 0.6 else 0
+
+            # Move the camera pan tilt
             self.pro_joint_ctrl.moveJoint( Joint.HEAD_PAN_JOINT, self.pan_ang, self.time, False )
             self.rate.sleep()
-            # print(self.pan_ang)
 
-        # それ以外
+        # Something else is pressed
         else:
             self.move_wheel_stop_motion()
-
-            # print("並進運動")
             self.move_wheel_translational_motion(0.8)
             self.rate.sleep()
 
@@ -148,6 +133,7 @@ class Ps4_Control:
     def move_wheel_stop_motion(self):
         speed = Twist()
         speed.angular.z = 0
+
         self.check_publishers_connection(self.pub_wheel_control)
         self.pub_wheel_control.publish(speed)
 
@@ -155,6 +141,7 @@ class Ps4_Control:
     def move_wheel_rotational_motion(self, angular):
         speed = Twist()
         speed.angular.z = angular
+
         self.check_publishers_connection(self.pub_wheel_control)
         self.pub_wheel_control.publish(speed)
 
@@ -169,12 +156,19 @@ class Ps4_Control:
             elif abs(self.left_joystick_ud) >= abs(self.left_joystick_lr) :
                 speed.linear.x = self.left_joystick_ud * linear
                 speed.linear.y = 0
+                speed.angular.z = self.right_joystick_lr * 1.57
+                if abs(speed.angular.z) <= 0.1:
+                    speed.angular.z = 0
 
             self.check_publishers_connection(self.pub_wheel_control)
             self.pub_wheel_control.publish(speed)
         else:
             speed.linear.x = self.left_joystick_ud * linear
             speed.linear.y = self.left_joystick_lr * linear
+            speed.angular.z = self.right_joystick_lr * 1.57
+
+            if abs(speed.angular.z) <= 0.1: speed.angular.z = 0
+            else: speed.linear.y = 0
 
             self.check_publishers_connection(self.pub_wheel_control)
             self.pub_wheel_control.publish(speed)
@@ -182,63 +176,63 @@ class Ps4_Control:
 
 if __name__ == '__main__':
     rospy.init_node('sobit_pro_ps4_control_node')
-    diagonal_path = rospy.get_param("diagonal_path",None)
+    diagonal_path = rospy.get_param("~diagonal_path", False)
 
-    ps4_control = Ps4_Control()
+    ps4_control = JoyControl()
     rospy.spin()
 
 
-############ メモ ############
+############ Buttons List ############
 
-# ×ボタンが押される
+# cross button
 # self.joy_button[0]
 
-# ○ボタンが押される
+# circle button
 # self.joy_button[1]
 
-# △ボタンが押される
+# triangle button
 # self.joy_button[2]
 
-# □ボタンが押される
+# square button
 # self.joy_button[3]
 
-# L1ボタンが押される
+# L1 button
 # self.joy_button[4]
 
-# R1ボタンが押される
+# R1 button
 # self.joy_button[5]
 
-# L2ボタンが押される
+# L2 button
 # self.joy_button[6]
 
-# R2ボタンが押される
+# R2 button
 # self.joy_button[7]
 
-# SHAREボタンが押される
+# Share button
 # self.joy_button[8]
 
-# OPTIONSボタンが押される
+# Options button
 # self.joy_button[9]
 
-# PSボタンが押される
+# PS button
 # self.joy_button[10]
 
-# L3ボタンが押し込まれる
+# L3 button
 # self.joy_button[11]
 
-# R3ボタンが押し込まれる
+# R3 button
 # self.joy_button[12]
 
-# 左スティック
+# Left stick
 # self.left_joystick_lr
 
-# 左スティック
+# Left stick
 # self.left_joystick_ud
 
-# 右スティック
+# Right stick
 # self.right_joystick_lr
 
-# 右スティック
+# Right stick
 # self.right_joystick_ud
 
 ##############################
