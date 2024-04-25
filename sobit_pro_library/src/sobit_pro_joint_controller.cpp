@@ -350,8 +350,10 @@ bool SobitProJointController::moveHandToTargetCoord( const double target_pos_x, 
     // TODO: choose the best angles (result_angles1 or result_angles2)
 
     // If the target is below the arm, the wrist is rotated 180 degrees
-    if ( arm_to_target_z < -ARM_LENTGH ) is_reached = moveArm(result_angles1.at(0), result_angles1.at(1), result_angles1.at(2), 0.0, result_angles1.at(3)-1.57); 
-    else                                 is_reached = moveArm(result_angles1.at(0), result_angles1.at(1), result_angles1.at(2), 0.0, result_angles1.at(3));
+    if ( arm_to_target_z < -ARM_LENTGH ) is_reached = moveArm( result_angles1.at(0), result_angles1.at(1), result_angles1.at(2), 0.0, result_angles1.at(3)-1.57,
+                                                               sec, is_sleep ); 
+    else                                 is_reached = moveArm( result_angles1.at(0), result_angles1.at(1), result_angles1.at(2), 0.0, result_angles1.at(3),
+                                                               sec, is_sleep );
 
     std::cout << "Target Position: (x, y, z) : (" << target_pos_x << ", " << target_pos_y << ", "<< target_pos_z << ")" << std::endl;
     std::cout << "Result Position: (x, y, z) : (" << result_pos1.x + move_wheel_x << ", " << move_wheel_y << ", " << result_pos1.z << ")" << std::endl;
@@ -375,7 +377,8 @@ bool SobitProJointController::moveHandToTargetTF( const std::string& target_name
 
     auto& tf_target_to_arm = transformStamped.transform.translation;
     is_reached = moveHandToTargetCoord( tf_target_to_arm.x, tf_target_to_arm.y, tf_target_to_arm.z,
-                                           shift_x, shift_y, shift_z );
+                                        shift_x, shift_y, shift_z,
+                                        sec, is_sleep );
     
     return is_reached;
 }
@@ -390,7 +393,8 @@ bool SobitProJointController::moveHandToPlaceCoord( const double target_pos_x, c
     // Reduce the target_pos_z by 0.05[m], until expected collision is detected
     while( !(is_reached && placeDecision(500, 1000)) ) {
         is_reached = moveHandToTargetCoord( target_pos_x, target_pos_y, target_pos_z, 
-                                               shift_x, shift_y, shift_z+target_z );
+                                            shift_x, shift_y, shift_z+target_z,
+                                            sec, is_sleep );
 
         if( !is_reached ) return is_reached;
 
@@ -417,7 +421,8 @@ bool SobitProJointController::moveHandToPlaceTF( const std::string& target_name,
 
     auto& tf_target_to_arm = transformStamped.transform.translation;
     is_reached = moveHandToPlaceCoord( tf_target_to_arm.x, tf_target_to_arm.y, tf_target_to_arm.z,
-                                          shift_x, shift_y, shift_z );
+                                       shift_x, shift_y, shift_z,
+                                       sec, is_sleep );
     
     return is_reached;
 }
