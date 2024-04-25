@@ -88,6 +88,7 @@ void SobitProControl::setParams( geometry_msgs::Twist vel_twist ){
                     steer_bl_deg = 225. - goal_deg; // rad = deg * (M_PI / 180.)
                     steer_br_deg = 135. - goal_deg; // rad = deg * (M_PI / 180.)
                 }
+                // TODO: -180.005 is a temporary solution
                 if( (-135. > goal_deg) && (goal_deg >= -180.005) ){
                     steer_fl_deg = -225. - goal_deg; // rad = deg * (M_PI / 180.)
                     steer_fr_deg = -135. - goal_deg; // rad = deg * (M_PI / 180.)

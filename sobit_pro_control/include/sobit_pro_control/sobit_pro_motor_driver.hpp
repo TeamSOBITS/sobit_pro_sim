@@ -63,7 +63,6 @@ class SobitProMotorDriver{
         const int PROTOCOL_VERSION                = 2.0; // float
 
         // Default setting
-
         const int BAUDRATE                        = 3000000; // Baudrate of Dynamixel
         const char *DEVICENAME                    = "/dev/input/dx_lower";
 
