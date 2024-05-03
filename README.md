@@ -425,7 +425,7 @@ SOBIT PROの移動機構を動かすための情報まとめです．
 
 
 ## ハードウェア
-SOBIT PROはオープンソースハードウェアとして[OnShape](https://cad.onshape.com/documents/4acbecde07fba120a62ec033/w/c6217b66947274dee4e8f911/e/c2e5c16292d7dfc11ee3cc01?renderMode=0&uiState=654a13b8711fc82bedc118e2)にて公開しております．
+SOBIT PROはオープンソースハードウェアとして[OnShape](https://cad.onshape.com/documents/4acbecde07fba120a62ec033/w/c6217b66947274dee4e8f911/e/c2e5c16292d7dfc11ee3cc01)にて公開しております．
 
 ![SOBIT PRO in OnShape](sobit_pro/docs/img/sobit_pro_onshape.png)
 
