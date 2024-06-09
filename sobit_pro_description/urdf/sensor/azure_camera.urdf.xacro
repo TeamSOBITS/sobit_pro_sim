@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<robot name="azure_camera" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="sobit_pro"
+       xmlns:xacro="http://ros.org/wiki/xacro">
 
   <xacro:macro name="azure_camera" params="prefix parent">
 
@@ -10,6 +11,7 @@
     </joint>
 
     <link name="${prefix}_base"/>
+
 
     <xacro:azure_kinect parent="${prefix}_base" tf_prefix="${prefix}_" add_cover="false">
       <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
