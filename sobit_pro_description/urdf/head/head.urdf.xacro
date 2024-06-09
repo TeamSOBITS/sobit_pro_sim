@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<robot name="head" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="sobit_pro"
+       xmlns:xacro="http://ros.org/wiki/xacro" >
   <xacro:include filename="$(find sobit_pro_description)/urdf/head/head.transmission.xacro" />
   
   <xacro:macro name="head" params="prefix parent">
