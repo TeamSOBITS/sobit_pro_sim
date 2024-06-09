@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<robot name="wheel" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="sobit_pro"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find sobit_pro_description)/urdf/wheel/wheel.transmission.xacro" />
 
   <xacro:macro name="stack_wheel_steer_base" params="parent prefix number x_loc y_loc z_loc roll=0.0 pitch=0.0 yaw=0.0">
 
@@ -141,6 +143,8 @@
     <xacro:stack_wheel_drive parent="wheel_b_l_steer_link" prefix="b_l" number="2" x_loc= "0.02" y_loc= "0.0" z_loc="-0.118" />
     <xacro:stack_wheel_drive parent="wheel_b_r_steer_link" prefix="b_r" number="3" x_loc= "0.02" y_loc= "0.0" z_loc="-0.118" />
     <xacro:stack_wheel_drive parent="wheel_f_r_steer_link" prefix="f_r" number="4" x_loc= "0.02" y_loc= "0.0" z_loc="-0.118" />
+
+    <!-- <xacro:wheel_transmission prefix="${prefix}" /> -->
 
   </xacro:macro>
 </robot>
