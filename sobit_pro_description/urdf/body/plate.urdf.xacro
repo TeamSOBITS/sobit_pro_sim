@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<robot name="plate" xmlns:xacro="http://ros.org/wiki/xacro">
-    <xacro:macro name="plate" params="prefix parent">
+<robot name="sobit_pro"
+       xmlns:xacro="http://ros.org/wiki/xacro" >
+  <xacro:macro name="plate" params="prefix parent">
 
     <joint name="${prefix}_bottom_joint" type="fixed">
       <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
@@ -106,5 +107,5 @@
       </inertial>
     </link>
 
-    </xacro:macro>
+  </xacro:macro>
 </robot>

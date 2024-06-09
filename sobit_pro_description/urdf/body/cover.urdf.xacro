@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<robot name="cover" xmlns:xacro="http://ros.org/wiki/xacro" >
+<robot name="sobit_pro"
+       xmlns:xacro="http://ros.org/wiki/xacro" >
   <xacro:macro name="cover" params="prefix parent" >
   
     <joint name="${prefix}_joint" type="fixed" >
