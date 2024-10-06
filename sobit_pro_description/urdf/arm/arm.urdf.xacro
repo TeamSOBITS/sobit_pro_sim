@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<robot name="arm" xmlns:xacro="http://ros.org/wiki/xacro" >
+<robot name="sobit_pro"
+       xmlns:xacro="http://ros.org/wiki/xacro" >
   <xacro:include filename="$(find sobit_pro_description)/urdf/arm/arm.transmission.xacro" />
 
   <xacro:macro name="arm" params="prefix parent" >
@@ -44,7 +45,7 @@
       <child link="${prefix}_shoulder_1_tilt_link" />
       <origin xyz="0.1560 0.0 0.0215" rpy="0.0 0.0 0.0 " />
       <axis xyz="0.0 -1.0 0.0 " />
-      <limit lower="${-M_PI / 2}" upper="${M_PI/2}" effort="10" velocity="10" />
+      <limit lower="${-M_PI/2}" upper="${M_PI/2}" effort="10" velocity="10" />
       <!-- <dynamics damping="0.2" friction="0" /> -->
     </joint>
 
@@ -83,8 +84,8 @@
       <origin xyz="0.1560 0.0 0.0215" rpy="0.0 0.0 ${M_PI}" />
       <axis xyz="0.0 1.0 0.0 " />
       <mimic joint="${prefix}_shoulder_1_tilt_joint" multiplier="1" offset="0" />
-      <limit lower="${-M_PI / 2}" upper="${M_PI/2}" effort="10" velocity="10" />
-      <dynamics damping="0.2" friction="0" />
+      <limit lower="${-M_PI/2}" upper="${M_PI/2}" effort="10" velocity="10" />
+      <!-- <dynamics damping="0.2" friction="0" /> -->
     </joint>
 
     <link name="${prefix}_shoulder_2_tilt_link" />
@@ -95,7 +96,7 @@
       <child link="${prefix}_elbow_upper_1_tilt_link" />
       <origin xyz="0.1500 0.0 0.0" rpy="0.0 0.0 0.0" />
       <axis xyz="0.0 -1.0 0.0 " />
-      <limit lower="${-M_PI / 2}" upper="${M_PI/2}" effort="10" velocity="10" />
+      <limit lower="${-M_PI/2}" upper="${M_PI/2}" effort="10" velocity="10" />
       <!-- <dynamics damping="0.2" friction="0" /> -->
     </joint>
 
@@ -134,8 +135,8 @@
       <origin xyz="0.1500 0.0 0.0" rpy="0.0 0.0 ${M_PI}" />
       <axis xyz="0.0 1.0 0.0 " />
       <mimic joint="${prefix}_elbow_upper_1_tilt_joint" multiplier="1" offset="0" />
-      <limit lower="${-M_PI / 2}" upper="${M_PI/2}" effort="10" velocity="10" />
-      <dynamics damping="0.2" friction="0" />
+      <limit lower="${-M_PI/2}" upper="${M_PI/2}" effort="10" velocity="10" />
+      <!-- <dynamics damping="0.2" friction="0" /> -->
     </joint>
 
     <link name="${prefix}_elbow_upper_2_tilt_link" />
@@ -146,7 +147,7 @@
       <child link="${prefix}_elbow_lower_tilt_link" />
       <origin xyz="0.1500 0.0 0.0" rpy="0.0 0.0 0.0" />
       <axis xyz="0.0 -1.0 0.0 " />
-      <limit lower="${-M_PI / 2}" upper="${M_PI/2}" effort="10" velocity="10" />
+      <limit lower="${-M_PI/2}" upper="${M_PI/2}" effort="10" velocity="10" />
       <!-- <dynamics damping="0.2" friction="0" /> -->
     </joint>
 
@@ -184,7 +185,7 @@
       <child link="${prefix}_elbow_lower_pan_link" />
       <origin xyz="0.028 0.0 0.0" rpy="0.0 0.0 0.0" />
       <axis xyz="1.0 0.0 0.0 " />
-      <limit lower="${-M_PI / 2}" upper="${M_PI/2}" effort="10" velocity="10" />
+      <limit lower="${-M_PI/2}" upper="${M_PI/2}" effort="10" velocity="10" />
       <!-- <dynamics damping="0.2" friction="0" /> -->
     </joint>
 
@@ -223,7 +224,7 @@
       <child link="${prefix}_wrist_tilt_link" />
       <origin xyz="0.122009 0.0 0.0" rpy="0.0 0.0 0.0" />
       <axis xyz="0.0 -1.0 0.0" />
-      <limit lower="${-M_PI / 2}" upper="${M_PI/2}" effort="10" velocity="10" />
+      <limit lower="${-M_PI/2}" upper="${M_PI/2}" effort="10" velocity="10" />
       <!-- <dynamics damping="0.2" friction="0" /> -->
     </joint>
 
