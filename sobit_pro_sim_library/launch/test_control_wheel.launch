@@ -1,0 +1,7 @@
+<launch>
+
+    <group ns="sobit_pro">
+        <node name="test_wheel" pkg="sobit_pro_sim_library" type="test_control_wheel.py" output="screen"/>
+    </group>
+
+</launch>
