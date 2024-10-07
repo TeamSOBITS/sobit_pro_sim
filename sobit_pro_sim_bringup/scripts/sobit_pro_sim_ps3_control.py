@@ -8,9 +8,9 @@ import rospy
 from sensor_msgs.msg import Joy
 from geometry_msgs.msg import Twist
 
-from sobit_pro_module import SobitProWheelController
-from sobit_pro_module import SobitProJointController
-from sobit_pro_module import Joint
+from sobit_pro_sim_module import SobitProSimWheelController
+from sobit_pro_sim_module import SobitProSimJointController
+from sobit_pro_sim_module import Joint
 
 
 class JoyControl:
@@ -18,10 +18,10 @@ class JoyControl:
         self.sub_joy           = rospy.Subscriber('joy', Joy, self.subscribe_joy, queue_size=10)
         self.pub_wheel_control = rospy.Publisher('mobile_base/commands/velocity', Twist, queue_size = 10)
 
-        # Init SobitProWheelController and SobitProJointController
+        # Init SobitProSimWheelController and SobitProSimJointController
         self.args = sys.argv
-        self.pro_wheel_ctrl = SobitProWheelController(self.args[0])
-        self.pro_joint_ctrl = SobitProJointController(self.args[0])
+        self.pro_wheel_ctrl = SobitProSimWheelController(self.args[0])
+        self.pro_joint_ctrl = SobitProSimJointController(self.args[0])
 
         # Set initial values
         self.tilt_ang = 0.0
@@ -165,7 +165,7 @@ class JoyControl:
 
 
 if __name__ == '__main__':
-    rospy.init_node('sobit_pro_ps3_control_node')
+    rospy.init_node('sobit_pro_sim_ps3_control_node')
     enable_diagonal = rospy.get_param("~enable_diagonal", False)
 
     ps3_control = JoyControl()

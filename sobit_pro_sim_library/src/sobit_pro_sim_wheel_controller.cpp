@@ -1,24 +1,24 @@
-#include "sobit_pro_library/sobit_pro_wheel_controller.hpp"
+#include "sobit_pro_sim_library/sobit_pro_sim_wheel_controller.hpp"
 
 using namespace sobit_pro;
 
-SobitProWheelController::SobitProWheelController ( const std::string& name ) : ROSCommonNode( name ), nh_(), pnh_("~"){
+SobitProSimWheelController::SobitProSimWheelController ( const std::string& name ) : ROSCommonNode( name ), nh_(), pnh_("~"){
     pub_cmd_vel_ = nh_.advertise< geometry_msgs::Twist >( "mobile_base/commands/velocity", 1 );
-    sub_odom_ = nh_.subscribe( "odom", 1, &SobitProWheelController::callbackOdometry, this );
+    sub_odom_ = nh_.subscribe( "odom", 1, &SobitProSimWheelController::callbackOdometry, this );
 
     ros::spinOnce();
     ros::Duration(3.0).sleep();
 }
 
-SobitProWheelController::SobitProWheelController () : ROSCommonNode( ), nh_(), pnh_("~"){ 
-    sub_odom_ = nh_.subscribe( "odom", 1, &SobitProWheelController::callbackOdometry, this );
+SobitProSimWheelController::SobitProSimWheelController () : ROSCommonNode( ), nh_(), pnh_("~"){ 
+    sub_odom_ = nh_.subscribe( "odom", 1, &SobitProSimWheelController::callbackOdometry, this );
     pub_cmd_vel_ = nh_.advertise< geometry_msgs::Twist >( "mobile_base/commands/velocity", 1 );
 
     ros::spinOnce();
     ros::Duration(3.0).sleep();
 }
 
-bool SobitProWheelController::controlWheelLinear( const double distance_x, const double distance_y ){
+bool SobitProSimWheelController::controlWheelLinear( const double distance_x, const double distance_y ){
     try{
         // wait for odom
         do{
@@ -88,7 +88,7 @@ bool SobitProWheelController::controlWheelLinear( const double distance_x, const
     }
 }
 
-bool SobitProWheelController::controlWheelRotateRad( const double angle_rad ){
+bool SobitProSimWheelController::controlWheelRotateRad( const double angle_rad ){
     try {
         // wait for odom
         do{
@@ -170,6 +170,6 @@ bool SobitProWheelController::controlWheelRotateRad( const double angle_rad ){
     }
 }
 
-bool SobitProWheelController::controlWheelRotateDeg( const double angle_deg ){
+bool SobitProSimWheelController::controlWheelRotateDeg( const double angle_deg ){
     return controlWheelRotateRad( deg2Rad(angle_deg) );
 }

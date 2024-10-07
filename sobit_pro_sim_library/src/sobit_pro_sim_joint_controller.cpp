@@ -1,27 +1,27 @@
-#include "sobit_pro_library/sobit_pro_joint_controller.h"
-#include "sobit_pro_library/sobit_pro_wheel_controller.hpp"
+#include "sobit_pro_sim_library/sobit_pro_sim_joint_controller.h"
+#include "sobit_pro_sim_library/sobit_pro_sim_wheel_controller.hpp"
 
 using namespace sobit_pro;
 
-SobitProJointController::SobitProJointController( const std::string& name ) : ROSCommonNode(name), nh_(), pnh_("~"), tfBuffer_(), tfListener_(tfBuffer_){
+SobitProSimJointController::SobitProSimJointController( const std::string& name ) : ROSCommonNode(name), nh_(), pnh_("~"), tfBuffer_(), tfListener_(tfBuffer_){
     pub_arm_joint_  = nh_.advertise<trajectory_msgs::JointTrajectory>("arm_trajectory_controller/command", 1);
     pub_head_joint_ = nh_.advertise<trajectory_msgs::JointTrajectory>("head_trajectory_controller/command", 1);
     
-    sub_curr_arm    = nh_.subscribe( "current_state_array", 1, &SobitProJointController::callbackCurrArm, this );
+    // sub_curr_arm    = nh_.subscribe( "current_state_array", 1, &SobitProSimJointController::callbackCurrArm, this ); // [Real Robot] 
 
     loadPose();
 }
 
-SobitProJointController::SobitProJointController() : ROSCommonNode(), nh_(), pnh_("~"), tfBuffer_(), tfListener_(tfBuffer_){
+SobitProSimJointController::SobitProSimJointController() : ROSCommonNode(), nh_(), pnh_("~"), tfBuffer_(), tfListener_(tfBuffer_){
     pub_arm_joint_  = nh_.advertise<trajectory_msgs::JointTrajectory>("arm_trajectory_controller/command", 1);
     pub_head_joint_ = nh_.advertise<trajectory_msgs::JointTrajectory>("head_trajectory_controller/command", 1);
 
-    sub_curr_arm    = nh_.subscribe( "current_state_array", 1, &SobitProJointController::callbackCurrArm, this );
+    // sub_curr_arm    = nh_.subscribe( "current_state_array", 1, &SobitProSimJointController::callbackCurrArm, this ); // [Real Robot] 
 
     loadPose();
 }
 
-geometry_msgs::Point SobitProJointController::forwardKinematics( const double arm_shoulder_tilt_joint_angle,
+geometry_msgs::Point SobitProSimJointController::forwardKinematics( const double arm_shoulder_tilt_joint_angle,
                                                                  const double arm_elbow_upper_tilt_joint_angle,
                                                                  const double arm_elbow_lower_tilt_joint_angle ){
     geometry_msgs::Point res_point;
@@ -42,7 +42,7 @@ geometry_msgs::Point SobitProJointController::forwardKinematics( const double ar
     return res_point;
 }
 
-std::vector<std::vector<double>> SobitProJointController::inverseKinematics( const double arm_elbow_upper_tilt_joint_to_target_x, const double arm_elbow_upper_tilt_joint_to_target_z,
+std::vector<std::vector<double>> SobitProSimJointController::inverseKinematics( const double arm_elbow_upper_tilt_joint_to_target_x, const double arm_elbow_upper_tilt_joint_to_target_z,
                                                                              const double arm_shoulder_tilt_joint_angle ){
     double diagonal_length     = sqrtf(powf(arm_elbow_upper_tilt_joint_to_target_x, 2.) + powf(arm_elbow_upper_tilt_joint_to_target_z, 2.));
     double diagonal_angle      = atanf(arm_elbow_upper_tilt_joint_to_target_z / arm_elbow_upper_tilt_joint_to_target_x);
@@ -74,7 +74,7 @@ std::vector<std::vector<double>> SobitProJointController::inverseKinematics( con
 }
 
 
-void SobitProJointController::loadPose(){
+void SobitProSimJointController::loadPose(){
     XmlRpc::XmlRpcValue pose_param;
 
     // Check if pose parameter YAML file was loaded
@@ -91,9 +91,9 @@ void SobitProJointController::loadPose(){
 
         pose.pose_name                                 =  static_cast<std::string>(pose_param[i]["pose_name"]);
         joint_val[Joint::ARM_SHOULDER_1_TILT_JOINT]    =  static_cast<double>(pose_param[i][joint_names_[Joint::ARM_SHOULDER_1_TILT_JOINT]]);
-        joint_val[Joint::ARM_SHOULDER_2_TILT_JOINT]    = -static_cast<double>(pose_param[i][joint_names_[Joint::ARM_SHOULDER_1_TILT_JOINT]]);
+        // joint_val[Joint::ARM_SHOULDER_2_TILT_JOINT]    = -static_cast<double>(pose_param[i][joint_names_[Joint::ARM_SHOULDER_1_TILT_JOINT]]); // [Real Robot] 
         joint_val[Joint::ARM_ELBOW_UPPER_1_TILT_JOINT] =  static_cast<double>(pose_param[i][joint_names_[Joint::ARM_ELBOW_UPPER_1_TILT_JOINT]]);
-        joint_val[Joint::ARM_ELBOW_UPPER_2_TILT_JOINT] = -static_cast<double>(pose_param[i][joint_names_[Joint::ARM_ELBOW_UPPER_1_TILT_JOINT]]);
+        // joint_val[Joint::ARM_ELBOW_UPPzER_2_TILT_JOINT] = -static_cast<double>(pose_param[i][joint_names_[Joint::ARM_ELBOW_UPPER_1_TILT_JOINT]]); // [Real Robot] 
         joint_val[Joint::ARM_ELBOW_LOWER_TILT_JOINT]   =  static_cast<double>(pose_param[i][joint_names_[Joint::ARM_ELBOW_LOWER_TILT_JOINT]]);
         joint_val[Joint::ARM_ELBOW_LOWER_PAN_JOINT]    =  static_cast<double>(pose_param[i][joint_names_[Joint::ARM_ELBOW_LOWER_PAN_JOINT]]);
         joint_val[Joint::ARM_WRIST_TILT_JOINT]         =  static_cast<double>(pose_param[i][joint_names_[Joint::ARM_WRIST_TILT_JOINT]]);
@@ -109,7 +109,7 @@ void SobitProJointController::loadPose(){
     return;
 }
 
-bool SobitProJointController::moveToPose( const std::string& pose_name,
+bool SobitProSimJointController::moveToPose( const std::string& pose_name,
                                           const double sec, bool is_sleep ){
     std::vector<double> joint_val;
     bool is_found = false;
@@ -142,7 +142,7 @@ bool SobitProJointController::moveToPose( const std::string& pose_name,
     }
 }
 
-bool SobitProJointController::moveAllJoint( const double arm_shoulder_tilt_joint,
+bool SobitProSimJointController::moveAllJoint( const double arm_shoulder_tilt_joint,
                                             const double arm_elbow_upper_tilt_joint,
                                             const double arm_elbow_lower_tilt_joint,
                                             const double arm_elbow_lower_pan_joint,
@@ -157,9 +157,9 @@ bool SobitProJointController::moveAllJoint( const double arm_shoulder_tilt_joint
 
         // Set Joint Trajectory for Arm
         setJointTrajectory( joint_names_[Joint::ARM_SHOULDER_1_TILT_JOINT]   ,  arm_shoulder_tilt_joint    , sec, &arm_joint_trajectory );
-        addJointTrajectory( joint_names_[Joint::ARM_SHOULDER_2_TILT_JOINT]   , -arm_shoulder_tilt_joint    , sec, &arm_joint_trajectory );
+        // addJointTrajectory( joint_names_[Joint::ARM_SHOULDER_2_TILT_JOINT]   , -arm_shoulder_tilt_joint    , sec, &arm_joint_trajectory ); // [Real Robot] 
         addJointTrajectory( joint_names_[Joint::ARM_ELBOW_UPPER_1_TILT_JOINT],  arm_elbow_upper_tilt_joint , sec, &arm_joint_trajectory );
-        addJointTrajectory( joint_names_[Joint::ARM_ELBOW_UPPER_2_TILT_JOINT], -arm_elbow_upper_tilt_joint , sec, &arm_joint_trajectory );
+        // addJointTrajectory( joint_names_[Joint::ARM_ELBOW_UPPER_2_TILT_JOINT], -arm_elbow_upper_tilt_joint , sec, &arm_joint_trajectory ); // [Real Robot] 
         addJointTrajectory( joint_names_[Joint::ARM_ELBOW_LOWER_TILT_JOINT]  ,  arm_elbow_lower_tilt_joint , sec, &arm_joint_trajectory );
         addJointTrajectory( joint_names_[Joint::ARM_ELBOW_LOWER_PAN_JOINT]   ,  arm_elbow_lower_pan_joint  , sec, &arm_joint_trajectory );
         addJointTrajectory( joint_names_[Joint::ARM_WRIST_TILT_JOINT]        ,  arm_wrist_tilt_joint       , sec, &arm_joint_trajectory );
@@ -185,22 +185,25 @@ bool SobitProJointController::moveAllJoint( const double arm_shoulder_tilt_joint
     }
 }
 
-bool SobitProJointController::moveJoint( const Joint joint_num,
+bool SobitProSimJointController::moveJoint( const Joint joint_num,
                                          const double rad,
                                          const double sec, bool is_sleep ){
     try{
         trajectory_msgs::JointTrajectory joint_trajectory;
       
-        // Parallel Joint (avoid lock of opposite joint)
-        if( joint_num == ARM_SHOULDER_1_TILT_JOINT || joint_num == ARM_ELBOW_UPPER_1_TILT_JOINT ){
-            setJointTrajectory( joint_names_[joint_num]    ,  rad, sec, &joint_trajectory );
-            addJointTrajectory( joint_names_[joint_num + 1], -rad, sec, &joint_trajectory );
+        // [Real Robot] Parallel Joint (avoid lock of opposite joint)
+        // if( joint_num == ARM_SHOULDER_1_TILT_JOINT || joint_num == ARM_ELBOW_UPPER_1_TILT_JOINT ){
+        //     setJointTrajectory( joint_names_[joint_num]    ,  rad, sec, &joint_trajectory );
+        //     addJointTrajectory( joint_names_[joint_num + 1], -rad, sec, &joint_trajectory );
 
-        } else if( joint_num == ARM_SHOULDER_2_TILT_JOINT || joint_num == ARM_ELBOW_UPPER_2_TILT_JOINT ){
-            setJointTrajectory( joint_names_[joint_num -1 ],  rad, sec, &joint_trajectory );
-            addJointTrajectory( joint_names_[joint_num]    , -rad, sec, &joint_trajectory );
+        // } else if( joint_num == ARM_SHOULDER_2_TILT_JOINT || joint_num == ARM_ELBOW_UPPER_2_TILT_JOINT ){
+        //     setJointTrajectory( joint_names_[joint_num -1 ],  rad, sec, &joint_trajectory );
+        //     addJointTrajectory( joint_names_[joint_num]    , -rad, sec, &joint_trajectory );
 
-        } else setJointTrajectory( joint_names_[joint_num] ,  rad, sec, &joint_trajectory );
+        // } else setJointTrajectory( joint_names_[joint_num] ,  rad, sec, &joint_trajectory );
+
+        // [SIM] Parallel Joint not used
+        setJointTrajectory( joint_names_[joint_num], rad, sec, &joint_trajectory );
 
 
         // Select the proper publisher
@@ -222,7 +225,7 @@ bool SobitProJointController::moveJoint( const Joint joint_num,
     }
 }
 
-bool SobitProJointController::moveHeadPanTilt( const double head_pan_joint,
+bool SobitProSimJointController::moveHeadPanTilt( const double head_pan_joint,
                                                const double head_tilt_joint,
                                                const double sec, bool is_sleep ){
     try{
@@ -244,7 +247,7 @@ bool SobitProJointController::moveHeadPanTilt( const double head_pan_joint,
     }
 }
 
-bool SobitProJointController::moveArm( const double arm_shoulder_tilt_joint,
+bool SobitProSimJointController::moveArm( const double arm_shoulder_tilt_joint,
                                        const double arm_elbow_upper_tilt_joint,
                                        const double arm_elbow_lower_tilt_joint,
                                        const double arm_elbow_lower_pan_joint,
@@ -254,9 +257,9 @@ bool SobitProJointController::moveArm( const double arm_shoulder_tilt_joint,
         trajectory_msgs::JointTrajectory arm_joint_trajectory;
 
         setJointTrajectory( joint_names_[Joint::ARM_SHOULDER_1_TILT_JOINT]   ,  arm_shoulder_tilt_joint    , sec, &arm_joint_trajectory );
-        addJointTrajectory( joint_names_[Joint::ARM_SHOULDER_2_TILT_JOINT]   , -arm_shoulder_tilt_joint    , sec, &arm_joint_trajectory );
+        // addJointTrajectory( joint_names_[Joint::ARM_SHOULDER_2_TILT_JOINT]   , -arm_shoulder_tilt_joint    , sec, &arm_joint_trajectory ); // [Real Robot]
         addJointTrajectory( joint_names_[Joint::ARM_ELBOW_UPPER_1_TILT_JOINT],  arm_elbow_upper_tilt_joint , sec, &arm_joint_trajectory );
-        addJointTrajectory( joint_names_[Joint::ARM_ELBOW_UPPER_2_TILT_JOINT], -arm_elbow_upper_tilt_joint , sec, &arm_joint_trajectory );
+        // addJointTrajectory( joint_names_[Joint::ARM_ELBOW_UPPER_2_TILT_JOINT], -arm_elbow_upper_tilt_joint , sec, &arm_joint_trajectory ); // [Real Robot]
         addJointTrajectory( joint_names_[Joint::ARM_ELBOW_LOWER_TILT_JOINT]  ,  arm_elbow_lower_tilt_joint , sec, &arm_joint_trajectory );
         addJointTrajectory( joint_names_[Joint::ARM_ELBOW_LOWER_PAN_JOINT]   ,  arm_elbow_lower_pan_joint  , sec, &arm_joint_trajectory );
         addJointTrajectory( joint_names_[Joint::ARM_WRIST_TILT_JOINT]        ,  arm_wrist_tilt_joint       , sec, &arm_joint_trajectory );
@@ -274,7 +277,7 @@ bool SobitProJointController::moveArm( const double arm_shoulder_tilt_joint,
     }
 }
 
-bool SobitProJointController::moveHandToTargetCoord( const double target_pos_x, const double target_pos_y, const double target_pos_z,
+bool SobitProSimJointController::moveHandToTargetCoord( const double target_pos_x, const double target_pos_y, const double target_pos_z,
                                                      const double shift_x     , const double shift_y     , const double shift_z,
                                                      const double sec, bool is_sleep ){
     double arm_to_target_x = target_pos_x + shift_x;
@@ -329,7 +332,7 @@ bool SobitProJointController::moveHandToTargetCoord( const double target_pos_x, 
     geometry_msgs::Point result_pos2 = forwardKinematics(result_angles2.at(0), result_angles2.at(1), result_angles2.at(2));
 
     // Move the wheels to the calculated distance
-    sobit_pro::SobitProWheelController wheel_ctr;
+    sobit_pro::SobitProSimWheelController wheel_ctr;
 
     std::cout << "(move_x, move_y): (" << move_wheel_x << ", " << move_wheel_y << ")" << std::endl;
     wheel_ctr.controlWheelLinear(move_wheel_x, move_wheel_y);
@@ -361,7 +364,7 @@ bool SobitProJointController::moveHandToTargetCoord( const double target_pos_x, 
     return is_reached;
 }
 
-bool SobitProJointController::moveHandToTargetTF( const std::string& target_name,
+bool SobitProSimJointController::moveHandToTargetTF( const std::string& target_name,
                                                   const double shift_x, const double shift_y, const double shift_z,
                                                   const double sec, bool is_sleep ){
     geometry_msgs::TransformStamped transformStamped;
@@ -388,7 +391,7 @@ bool SobitProJointController::moveHandToTargetTF( const std::string& target_name
 }
 
 // Check!!
-bool SobitProJointController::moveHandToPlaceCoord( const double target_pos_x, const double target_pos_y, const double target_pos_z,
+bool SobitProSimJointController::moveHandToPlaceCoord( const double target_pos_x, const double target_pos_y, const double target_pos_z,
                                                     const double shift_x     , const double shift_y     , const double shift_z,
                                                     const double sec, bool is_sleep ){
     double target_z    = 0.;
@@ -409,7 +412,7 @@ bool SobitProJointController::moveHandToPlaceCoord( const double target_pos_x, c
     return is_reached;
 }
 
-bool SobitProJointController::moveHandToPlaceTF( const std::string& target_name,
+bool SobitProSimJointController::moveHandToPlaceTF( const std::string& target_name,
                                                  const double shift_x, const double shift_y, const double shift_z,
                                                  const double sec, bool is_sleep ){
     geometry_msgs::TransformStamped transformStamped;
@@ -435,30 +438,32 @@ bool SobitProJointController::moveHandToPlaceTF( const std::string& target_name,
     return is_reached;
 }
 
-bool SobitProJointController::graspDecision( const int min_curr, const int max_curr ){
-    bool is_grasped = false;
+// [Real Robot]
+bool SobitProSimJointController::graspDecision( const int min_curr, const int max_curr ){
+    bool is_grasped = true;
 
-    // Spin until the current value is obtained
-    while( hand_joint_curr_ == 0. ) ros::spinOnce();
+    // // Spin until the current value is obtained
+    // while( hand_joint_curr_ == 0. ) ros::spinOnce();
 
-    // ros::spinOnce();
-    std::cout << "hand_joint_curr_ = " << hand_joint_curr_ << std::endl;
+    // // ros::spinOnce();
+    // std::cout << "hand_joint_curr_ = " << hand_joint_curr_ << std::endl;
 
-    is_grasped = (min_curr <= hand_joint_curr_ && hand_joint_curr_ <= max_curr) ? true : false;
+    // is_grasped = (min_curr <= hand_joint_curr_ && hand_joint_curr_ <= max_curr) ? true : false;
 
     return is_grasped;
 }
 
-bool SobitProJointController::placeDecision( const int min_curr, const int max_curr ){
-    bool is_placed = false;
+// [Real Robot]
+bool SobitProSimJointController::placeDecision( const int min_curr, const int max_curr ){
+    bool is_placed = true;
 
-    // Spin until the current value is obtained
-    while( arm_wrist_tilt_joint_curr_ == 0. ) ros::spinOnce();
+    // // Spin until the current value is obtained
+    // while( arm_wrist_tilt_joint_curr_ == 0. ) ros::spinOnce();
 
-    // ros::spinOnce();
-    std::cout << "arm_wrist_tilt_joint_curr_ = " << arm_wrist_tilt_joint_curr_ << std::endl;
+    // // ros::spinOnce();
+    // std::cout << "arm_wrist_tilt_joint_curr_ = " << arm_wrist_tilt_joint_curr_ << std::endl;
 
-    is_placed = (min_curr <= arm_wrist_tilt_joint_curr_ && arm_wrist_tilt_joint_curr_ <= max_curr) ? true : false;
+    // is_placed = (min_curr <= arm_wrist_tilt_joint_curr_ && arm_wrist_tilt_joint_curr_ <= max_curr) ? true : false;
 
     return is_placed;
 }

@@ -1,11 +1,11 @@
 #include <ros/ros.h>
-#include "sobit_pro_library/sobit_pro_joint_controller.h"
+#include "sobit_pro_sim_library/sobit_pro_sim_joint_controller.h"
 
 
 int main( int argc, char *argv[] ){
-    ros::init(argc, argv, "sobit_pro_test_control_head");
+    ros::init(argc, argv, "sobit_pro_sim_test_control_head");
     
-    sobit_pro::SobitProJointController pro_joint_ctrl;
+    sobit_pro::SobitProSimJointController pro_joint_ctrl;
 
     const double MAX_ANGLE =  1.57;
     const double MIN_ANGLE = -1.57;

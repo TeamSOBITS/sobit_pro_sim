@@ -1,11 +1,11 @@
 #include <ros/ros.h>
-#include "sobit_pro_library/sobit_pro_joint_controller.h"
+#include "sobit_pro_sim_library/sobit_pro_sim_joint_controller.h"
 
 
 int main( int argc, char *argv[] ){
-    ros::init(argc, argv, "sobit_pro_test_control_arm");
+    ros::init(argc, argv, "sobit_pro_sim_test_control_arm");
     
-    sobit_pro::SobitProJointController pro_joint_ctrl;
+    sobit_pro::SobitProSimJointController pro_joint_ctrl;
 
     // Move all the arm joints
     pro_joint_ctrl.moveArm( 1.0, 1.0, -1.0, 0.0, -1.0, 3.0, true );

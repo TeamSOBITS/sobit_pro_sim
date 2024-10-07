@@ -5,26 +5,26 @@ import sys
 from subprocess import Popen
 
 import rospy
-from sobit_pro_module import SobitProJointController
-from sobit_pro_module import SobitProWheelController
-from sobit_pro_module import Joint
+from sobit_pro_sim_module import SobitProSimJointController
+from sobit_pro_sim_module import SobitProSimWheelController
+from sobit_pro_sim_module import Joint
 
 from std_srvs.srv import SetBool
 
 
 def test_place_on_table():
-    rospy.init_node('sobit_pro_test_place_on_table')
+    rospy.init_node('sobit_pro_sim_test_place_on_table')
     
     args = sys.argv
-    pro_joint_ctrl = SobitProJointController(args[0])
-    pro_wheel_ctrl = SobitProWheelController(args[0])
+    pro_joint_ctrl = SobitProSimJointController(args[0])
+    pro_wheel_ctrl = SobitProSimWheelController(args[0])
 
     # Set the detecting_pose
     pro_joint_ctrl.moveToPose( "detecting_pose", 5.0, True )
 
     """
     # Lauch the placeable_position_estimator node
-    package_name = "sobit_pro_bringup"
+    package_name = "sobit_pro_sim_bringup"
     node_name    = "placeable_position_estimator"
     launch_name  = node_name + ".launch"
     comand       = "roslaunch " + package_name + " " + launch_name

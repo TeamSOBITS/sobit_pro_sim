@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10.2)
-project(sobit_pro_sim_sim_library)
+project(sobit_pro_sim_library)
 
 cmake_policy(SET CMP0002 OLD)
 set(ALLOW_DUPLICATE_CUSTOM_TARGETS TRUE)

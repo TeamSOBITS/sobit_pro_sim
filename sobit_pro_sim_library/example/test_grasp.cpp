@@ -1,11 +1,11 @@
 #include <ros/ros.h>
-#include "sobit_pro_library/sobit_pro_joint_controller.h"
+#include "sobit_pro_sim_library/sobit_pro_sim_joint_controller.h"
 
 
 int main( int argc, char *argv[] ){
-    ros::init(argc, argv, "sobit_pro_test_grasp_on_floor");
+    ros::init(argc, argv, "sobit_pro_sim_test_grasp_on_floor");
 
-    sobit_pro::SobitProJointController pro_joint_ctrl;
+    sobit_pro::SobitProSimJointController pro_joint_ctrl;
 
     std::string target_name = "potato_chips";
     bool is_done = false;

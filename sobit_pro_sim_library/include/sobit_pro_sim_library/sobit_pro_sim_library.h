@@ -14,7 +14,7 @@ class ROSCommonNode {
             int    argc = 0;
             delete[] cstr;
 
-            ros::init( argc, argv, "sobit_pro_library_node" );
+            ros::init( argc, argv, "sobit_pro_sim_library_node" );
         }
 
         ROSCommonNode() {}

@@ -4,15 +4,15 @@
 import sys
 
 import rospy
-from sobit_pro_module import SobitProJointController
-from sobit_pro_module import Joint
+from sobit_pro_sim_module import SobitProSimJointController
+from sobit_pro_sim_module import Joint
 
 
 def test_control_head():
-    rospy.init_node('sobit_pro_test_control_head')
+    rospy.init_node('sobit_pro_sim_test_control_head')
 
     args = sys.argv
-    pro_joint_ctrl = SobitProJointController(args[0])
+    pro_joint_ctrl = SobitProSimJointController(args[0])
 
     MAX_ANGLE    =  1.57
     MIN_ANGLE    = -1.57

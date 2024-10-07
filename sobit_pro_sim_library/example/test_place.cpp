@@ -1,13 +1,13 @@
 #include <cstdlib>
 
 #include <ros/ros.h>
-#include "sobit_pro_library/sobit_pro_joint_controller.h"
+#include "sobit_pro_sim_library/sobit_pro_sim_joint_controller.h"
 
 
 int main( int argc, char *argv[] ){
-    ros::init(argc, argv, "sobit_pro_test_put_on_table");
+    ros::init(argc, argv, "sobit_pro_sim_test_put_on_table");
 
-    sobit_pro::SobitProJointController pro_joint_ctrl;
+    sobit_pro::SobitProSimJointController pro_joint_ctrl;
 
     std::string target_name = "placeable_point";
     bool is_done = false;
@@ -16,7 +16,7 @@ int main( int argc, char *argv[] ){
     pro_joint_ctrl.moveToPose( "detecting_pose", 5.0, true );
 
     // Lauch the placeable_position_estimator node
-    std::string package_name = "sobit_pro_bringup";
+    std::string package_name = "sobit_pro_sim_bringup";
     std::string node_name    = "placeable_position_estimator";
     std::string launch_name  = node_name+".launch";
     std::string command      = "roslaunch " + package_name + " " + launch_name;

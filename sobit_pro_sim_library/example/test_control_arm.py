@@ -4,15 +4,15 @@
 import sys
 
 import rospy
-from sobit_pro_module import SobitProJointController
-from sobit_pro_module import Joint
+from sobit_pro_sim_module import SobitProSimJointController
+from sobit_pro_sim_module import Joint
 
 
 def test_control_arm():
-    rospy.init_node('sobit_pro_test_control_arm')
+    rospy.init_node('sobit_pro_sim_test_control_arm')
 
     args = sys.argv
-    pro_joint_ctrl = SobitProJointController(args[0]) # args[0] : C++上でros::init()を行うための引数
+    pro_joint_ctrl = SobitProSimJointController(args[0]) # args[0] : C++上でros::init()を行うための引数
 
     # Move all the arm joints
     pro_joint_ctrl.moveArm( 1.0, 1.0, -1.0, 0.0, -1.0, 3.0, True )

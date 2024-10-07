@@ -5,7 +5,7 @@
 #include <cstring>
 
 #include <ros/ros.h>
-#include "sobit_pro_library/sobit_pro_library.h"
+#include "sobit_pro_sim_library/sobit_pro_sim_library.h"
 // #include <tf/transform_broadcaster.h>
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2/LinearMath/Quaternion.h>
@@ -18,7 +18,7 @@
 // #define MAX_VEL_DIF 0.075
 
 namespace sobit_pro {
-    class SobitProWheelController  : private ROSCommonNode {
+    class SobitProSimWheelController  : private ROSCommonNode {
         private:
             ros::NodeHandle nh_;
             ros::NodeHandle pnh_;
@@ -37,8 +37,8 @@ namespace sobit_pro {
         public:
             static constexpr const double MAX_VEL_DIF = 0.075;
 
-            SobitProWheelController( const std::string &name );
-            SobitProWheelController();
+            SobitProSimWheelController( const std::string &name );
+            SobitProSimWheelController();
 
             bool controlWheelLinear( const double distance_x, const double distance_y );
             bool controlWheelRotateRad( const double angle_rad );
@@ -46,7 +46,7 @@ namespace sobit_pro {
     };
 }
 
-inline void sobit_pro::SobitProWheelController::checkPublishersConnection( const ros::Publisher& pub ){
+inline void sobit_pro::SobitProSimWheelController::checkPublishersConnection( const ros::Publisher& pub ){
     ros::Rate loop_rate(10);
 
     while( pub.getNumSubscribers()	== 0 && ros::ok() ){
@@ -57,10 +57,10 @@ inline void sobit_pro::SobitProWheelController::checkPublishersConnection( const
     return; 
 }
 
-inline void sobit_pro::SobitProWheelController::callbackOdometry( const nav_msgs::OdometryConstPtr& odom_msg ){ curt_odom_ = *odom_msg; }
+inline void sobit_pro::SobitProSimWheelController::callbackOdometry( const nav_msgs::OdometryConstPtr& odom_msg ){ curt_odom_ = *odom_msg; }
 
 // Check!!
-inline double sobit_pro::SobitProWheelController::geometryQuat2Yaw( const geometry_msgs::Quaternion& geometry_quat ){
+inline double sobit_pro::SobitProSimWheelController::geometryQuat2Yaw( const geometry_msgs::Quaternion& geometry_quat ){
     // tf::Quaternion quat;
     tf2::Quaternion quat_tf;
     double roll, pitch, yaw;
@@ -76,8 +76,8 @@ inline double sobit_pro::SobitProWheelController::geometryQuat2Yaw( const geomet
     return yaw;
 }
 
-inline double sobit_pro::SobitProWheelController::rad2Deg( const double rad ){ return rad * 180.0 / M_PI; }
+inline double sobit_pro::SobitProSimWheelController::rad2Deg( const double rad ){ return rad * 180.0 / M_PI; }
 
-inline double sobit_pro::SobitProWheelController::deg2Rad( const double deg ){ return deg * M_PI / 180.0; }
+inline double sobit_pro::SobitProSimWheelController::deg2Rad( const double deg ){ return deg * M_PI / 180.0; }
 
 #endif /* _SOBIT_PRO_LIBRARY_WHEEL_CONTROLLER_H_ */

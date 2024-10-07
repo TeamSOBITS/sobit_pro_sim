@@ -5,14 +5,14 @@
 #include <cstring>
 
 #include <ros/ros.h>
-#include "sobit_pro_library/sobit_pro_library.h"
+#include "sobit_pro_sim_library/sobit_pro_sim_library.h"
 #include <tf2_ros/transform_listener.h>
 
 #include <trajectory_msgs/JointTrajectory.h>
 #include <geometry_msgs/TransformStamped.h>
 #include <geometry_msgs/Point.h>
 // #include <sobits_msgs/current_state.h>
-#include <sobits_msgs/current_state_array.h>
+#include <sobits_msgs/current_state_array.h> // [Real Robot] 
 
 // #define ARM_UPPER   0.15
 // #define ARM_INNER   0.15
@@ -23,9 +23,9 @@
 namespace sobit_pro{
 
 enum Joint{ ARM_SHOULDER_1_TILT_JOINT = 0,
-            ARM_SHOULDER_2_TILT_JOINT,
+            // ARM_SHOULDER_2_TILT_JOINT, // [Real Robot] 
             ARM_ELBOW_UPPER_1_TILT_JOINT,
-            ARM_ELBOW_UPPER_2_TILT_JOINT,
+            // ARM_ELBOW_UPPER_2_TILT_JOINT, // [Real Robot] 
             ARM_ELBOW_LOWER_TILT_JOINT,
             ARM_ELBOW_LOWER_PAN_JOINT,
             ARM_WRIST_TILT_JOINT,
@@ -40,14 +40,14 @@ typedef struct{
     std::vector<double> joint_val;
 } Pose;
 
-class SobitProJointController : private ROSCommonNode{
+class SobitProSimJointController : private ROSCommonNode{
     private:
         ros::NodeHandle   nh_;
         ros::NodeHandle   pnh_;
 
         ros::Publisher    pub_arm_joint_;
         ros::Publisher    pub_head_joint_;
-        ros::Subscriber   sub_curr_arm;
+        // ros::Subscriber   sub_curr_arm;
         
         tf2_ros::Buffer            tfBuffer_;
         tf2_ros::TransformListener tfListener_;
@@ -60,13 +60,13 @@ class SobitProJointController : private ROSCommonNode{
         const double ARM_GRIPPER = 0.25; // Prev 25.0?
         const double ARM_LENTGH  = ARM_UPPER+ARM_INNER+ARM_LOWER;
 
-        double arm_wrist_tilt_joint_curr_ = 0.;
-        double hand_joint_curr_           = 0.;
+        // double arm_wrist_tilt_joint_curr_ = 0.; // [Real Robot] 
+        // double hand_joint_curr_           = 0.; // [Real Robot] 
 
         const std::vector<std::string> joint_names_ = { "arm_shoulder_1_tilt_joint", 
-                                                        "arm_shoulder_2_tilt_joint",
+                                                        // "arm_shoulder_2_tilt_joint", // [Real Robot] 
                                                         "arm_elbow_upper_1_tilt_joint",
-                                                        "arm_elbow_upper_2_tilt_joint",
+                                                        // "arm_elbow_upper_2_tilt_joint", // [Real Robot] 
                                                         "arm_elbow_lower_tilt_joint",
                                                         "arm_elbow_lower_pan_joint",
                                                         "arm_wrist_tilt_joint",
@@ -77,7 +77,7 @@ class SobitProJointController : private ROSCommonNode{
         void setJointTrajectory( const std::string& joint_name, const double rad, const double sec, trajectory_msgs::JointTrajectory* jt );
         void addJointTrajectory( const std::string& joint_name, const double rad, const double sec, trajectory_msgs::JointTrajectory* jt );
         void checkPublishersConnection( const ros::Publisher& pub );
-        void callbackCurrArm( const sobits_msgs::current_state_array& msg );
+        // void callbackCurrArm( const sobits_msgs::current_state_array& msg ); // [Real Robot] 
 
         geometry_msgs::Point forwardKinematics( const double arm_shoulder_tilt_joint_angle,
                                                 const double arm_elbow_upper_tilt_joint_angle,
@@ -88,8 +88,8 @@ class SobitProJointController : private ROSCommonNode{
         void loadPose();
 
     public:
-        SobitProJointController( const std::string& name );
-        SobitProJointController();
+        SobitProSimJointController( const std::string& name );
+        SobitProSimJointController();
 
         bool moveToPose( const std::string& pose_name,
                          const double sec = 5.0, bool is_sleep = true );
@@ -133,7 +133,7 @@ class SobitProJointController : private ROSCommonNode{
 
 } // namespace sobit_pro
 
-inline void sobit_pro::SobitProJointController::setJointTrajectory( const std::string& joint_name,
+inline void sobit_pro::SobitProSimJointController::setJointTrajectory( const std::string& joint_name,
                                                                     const double       rad,
                                                                     const double       sec,
                                                                     trajectory_msgs::JointTrajectory* jt ) {
@@ -153,7 +153,7 @@ inline void sobit_pro::SobitProJointController::setJointTrajectory( const std::s
     return;
 }
 
-inline void sobit_pro::SobitProJointController::addJointTrajectory( const std::string& joint_name,
+inline void sobit_pro::SobitProSimJointController::addJointTrajectory( const std::string& joint_name,
                                                                     const double        rad,
                                                                     const double        sec,
                                                                     trajectory_msgs::JointTrajectory* jt ) {
@@ -171,7 +171,7 @@ inline void sobit_pro::SobitProJointController::addJointTrajectory( const std::s
     return;
 }
 
-inline void sobit_pro::SobitProJointController::checkPublishersConnection( const ros::Publisher& pub ) {
+inline void sobit_pro::SobitProSimJointController::checkPublishersConnection( const ros::Publisher& pub ) {
     ros::Rate loop_rate( 10 );
 
     while( pub.getNumSubscribers( ) == 0 && ros::ok( ) ){
@@ -182,14 +182,14 @@ inline void sobit_pro::SobitProJointController::checkPublishersConnection( const
     return;
 }
 
-// Check!
-inline void sobit_pro::SobitProJointController::callbackCurrArm( const sobits_msgs::current_state_array& msg ){
-    // ros::spinOnce();
+// [Real Robot] Check!
+// inline void sobit_pro::SobitProSimJointController::callbackCurrArm( const sobits_msgs::current_state_array& msg ){
+//     // ros::spinOnce();
 
-    for( const auto actuator : msg.current_state_array ){
-        if( actuator.joint_name == joint_names_[ARM_WRIST_TILT_JOINT] ) arm_wrist_tilt_joint_curr_ = actuator.current_ma;
-        if( actuator.joint_name == joint_names_[HAND_JOINT] )           hand_joint_curr_           = actuator.current_ma;
-    }
-}
+//     for( const auto actuator : msg.current_state_array ){
+//         if( actuator.joint_name == joint_names_[ARM_WRIST_TILT_JOINT] ) arm_wrist_tilt_joint_curr_ = actuator.current_ma;
+//         if( actuator.joint_name == joint_names_[HAND_JOINT] )           hand_joint_curr_           = actuator.current_ma;
+//     }
+// }
 
 #endif /* _SOBIT_PRO_LIBRARY_JOINT_CONTROLLER_H_ */

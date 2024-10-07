@@ -6,13 +6,13 @@ import numpy as np
 import math
 
 import rospy
-from sobit_pro_module import SobitProWheelController
+from sobit_pro_sim_module import SobitProSimWheelController
 
 from geometry_msgs.msg import Twist
 
 
 def test_control_wheel():
-    rospy.init_node('sobit_pro_test_control_wheel')
+    rospy.init_node('sobit_pro_sim_test_control_wheel')
 
     pub = rospy.Publisher("/mobile_base/commands/velocity",Twist,queue_size=1)
     vel = Twist()
@@ -35,7 +35,7 @@ def test_control_wheel():
 
     """
     args = sys.argv
-    pro_wheel_ctrl = SobitProWheelController(args[0])
+    pro_wheel_ctrl = SobitProSimWheelController(args[0])
 
     # Move the wheels (linear motion)
     pro_wheel_ctrl.controlWheelLinear(1.0, 0.0)
