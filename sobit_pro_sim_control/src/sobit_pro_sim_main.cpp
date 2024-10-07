@@ -1,11 +1,11 @@
 #include "sobit_pro_sim_control/sobit_pro_sim_main.hpp"
 #include "sobit_pro_sim_control/sobit_pro_sim_control.hpp"
-// #include "sobit_pro_sim_control/sobit_pro_sim_motor_driver.hpp" // [Real Robot]
+#include "sobit_pro_sim_control/sobit_pro_sim_motor_driver.hpp" // [Real Robot]
 #include "sobit_pro_sim_control/sobit_pro_sim_odometry.hpp"
 
 // Create the instance
 SobitProControl     sobit_pro_control;
-// SobitProMotorDriver sobit_pro_motor_driver; // [Real Robot]
+SobitProSimMotorDriver sobit_pro_motor_driver; // [Real Robot]
 SobitProOdometry    sobit_pro_odometry;
 
 // Twist callback
@@ -118,10 +118,10 @@ void SobitProMain::control_wheel(){
     } while(!joints_pos.size() and !joints_vel.size());
 
     // [Real Robot] Set the initial position of the wheel
-    // wheel_fl_init_pos = sobit_pro_motor_driver.feedbackWheelPos(SobitProMotorDriver::WHEEL_F_L);
-    // wheel_fr_init_pos = sobit_pro_motor_driver.feedbackWheelPos(SobitProMotorDriver::WHEEL_F_R);
-    // wheel_bl_init_pos = sobit_pro_motor_driver.feedbackWheelPos(SobitProMotorDriver::WHEEL_B_L);
-    // wheel_br_init_pos = sobit_pro_motor_driver.feedbackWheelPos(SobitProMotorDriver::WHEEL_B_R);
+    // wheel_fl_init_pos = sobit_pro_motor_driver.feedbackWheelPos(SobitProSimMotorDriver::WHEEL_F_L);
+    // wheel_fr_init_pos = sobit_pro_motor_driver.feedbackWheelPos(SobitProSimMotorDriver::WHEEL_F_R);
+    // wheel_bl_init_pos = sobit_pro_motor_driver.feedbackWheelPos(SobitProSimMotorDriver::WHEEL_B_L);
+    // wheel_br_init_pos = sobit_pro_motor_driver.feedbackWheelPos(SobitProSimMotorDriver::WHEEL_B_R);
 
     // [SIM] Set the initial position of the wheel
     wheel_fl_init_pos = SobitProMain::getJointPos("wheel_f_l_drive_joint") * 1024. / (M_PI/2.) + 2048.;
@@ -181,10 +181,10 @@ void SobitProMain::control_wheel(){
         set_steer_pos = sobit_pro_control.setSteerPos();
 
         // [Real Robot] Get current steer position value
-        // steer_fl_curt_pos = sobit_pro_motor_driver.feedbackSteerPos(SobitProMotorDriver::STEER_F_L);
-        // steer_fr_curt_pos = sobit_pro_motor_driver.feedbackSteerPos(SobitProMotorDriver::STEER_F_R);
-        // steer_bl_curt_pos = sobit_pro_motor_driver.feedbackSteerPos(SobitProMotorDriver::STEER_B_L);
-        // steer_br_curt_pos = sobit_pro_motor_driver.feedbackSteerPos(SobitProMotorDriver::STEER_B_R);
+        // steer_fl_curt_pos = sobit_pro_motor_driver.feedbackSteerPos(SobitProSimMotorDriver::STEER_F_L);
+        // steer_fr_curt_pos = sobit_pro_motor_driver.feedbackSteerPos(SobitProSimMotorDriver::STEER_F_R);
+        // steer_bl_curt_pos = sobit_pro_motor_driver.feedbackSteerPos(SobitProSimMotorDriver::STEER_B_L);
+        // steer_br_curt_pos = sobit_pro_motor_driver.feedbackSteerPos(SobitProSimMotorDriver::STEER_B_R);
 
         // [SIM] Get current steer position value
         steer_fl_curt_pos = SobitProMain::getJointPos("wheel_f_l_steer_joint") * 1024. / (M_PI/2.) + 2048.;
@@ -230,20 +230,20 @@ void SobitProMain::control_wheel(){
         // Update current steer position and wait until steer goal is reached
         do{
             // [Real Robot] Get current steer position value
-            // steer_fl_curt_pos = sobit_pro_motor_driver.feedbackSteerPos(SobitProMotorDriver::STEER_F_L);
-            // steer_fr_curt_pos = sobit_pro_motor_driver.feedbackSteerPos(SobitProMotorDriver::STEER_F_R);
-            // steer_bl_curt_pos = sobit_pro_motor_driver.feedbackSteerPos(SobitProMotorDriver::STEER_B_L);
-            // steer_br_curt_pos = sobit_pro_motor_driver.feedbackSteerPos(SobitProMotorDriver::STEER_B_R);
+            // steer_fl_curt_pos = sobit_pro_motor_driver.feedbackSteerPos(SobitProSimMotorDriver::STEER_F_L);
+            // steer_fr_curt_pos = sobit_pro_motor_driver.feedbackSteerPos(SobitProSimMotorDriver::STEER_F_R);
+            // steer_bl_curt_pos = sobit_pro_motor_driver.feedbackSteerPos(SobitProSimMotorDriver::STEER_B_L);
+            // steer_br_curt_pos = sobit_pro_motor_driver.feedbackSteerPos(SobitProSimMotorDriver::STEER_B_R);
 
             // [SIM] Get current steer position value [rad]
             steer_fl_curt_pos = SobitProMain::getJointPos("wheel_f_l_steer_joint") * 1024. / (M_PI/2.) + 2048.;
             steer_fr_curt_pos = SobitProMain::getJointPos("wheel_f_r_steer_joint") * 1024. / (M_PI/2.) + 2048.;
             steer_bl_curt_pos = SobitProMain::getJointPos("wheel_b_l_steer_joint") * 1024. / (M_PI/2.) + 2048.;
             steer_br_curt_pos = SobitProMain::getJointPos("wheel_b_r_steer_joint") * 1024. / (M_PI/2.) + 2048.;
-        }while( (SobitProMotorDriver::DXL_MOVING_STATUS_THRESHOLD < fabsf(set_steer_pos[0] - steer_fl_curt_pos)) 
-             && (SobitProMotorDriver::DXL_MOVING_STATUS_THRESHOLD < fabsf(set_steer_pos[1] - steer_fr_curt_pos))
-             && (SobitProMotorDriver::DXL_MOVING_STATUS_THRESHOLD < fabsf(set_steer_pos[2] - steer_bl_curt_pos))
-             && (SobitProMotorDriver::DXL_MOVING_STATUS_THRESHOLD < fabsf(set_steer_pos[3] - steer_br_curt_pos)) );
+        }while( (SobitProSimMotorDriver::DXL_MOVING_STATUS_THRESHOLD < fabsf(set_steer_pos[0] - steer_fl_curt_pos)) 
+             && (SobitProSimMotorDriver::DXL_MOVING_STATUS_THRESHOLD < fabsf(set_steer_pos[1] - steer_fr_curt_pos))
+             && (SobitProSimMotorDriver::DXL_MOVING_STATUS_THRESHOLD < fabsf(set_steer_pos[2] - steer_bl_curt_pos))
+             && (SobitProSimMotorDriver::DXL_MOVING_STATUS_THRESHOLD < fabsf(set_steer_pos[3] - steer_br_curt_pos)) );
 
         // Set goal wheel velocity value
         set_wheel_vel = sobit_pro_control.setWheelVel();
@@ -291,10 +291,10 @@ void SobitProMain::control_wheel(){
 
 
         // [Real Robot] Update the current wheel position
-        // wheel_fl_curt_pos = sobit_pro_motor_driver.feedbackWheelPos(SobitProMotorDriver::WHEEL_F_L);
-        // wheel_fr_curt_pos = sobit_pro_motor_driver.feedbackWheelPos(SobitProMotorDriver::WHEEL_F_R);
-        // wheel_bl_curt_pos = sobit_pro_motor_driver.feedbackWheelPos(SobitProMotorDriver::WHEEL_B_L);
-        // wheel_br_curt_pos = sobit_pro_motor_driver.feedbackWheelPos(SobitProMotorDriver::WHEEL_B_R);
+        // wheel_fl_curt_pos = sobit_pro_motor_driver.feedbackWheelPos(SobitProSimMotorDriver::WHEEL_F_L);
+        // wheel_fr_curt_pos = sobit_pro_motor_driver.feedbackWheelPos(SobitProSimMotorDriver::WHEEL_F_R);
+        // wheel_bl_curt_pos = sobit_pro_motor_driver.feedbackWheelPos(SobitProSimMotorDriver::WHEEL_B_L);
+        // wheel_br_curt_pos = sobit_pro_motor_driver.feedbackWheelPos(SobitProSimMotorDriver::WHEEL_B_R);
 
         // [SIM] Update the current wheel position
         wheel_fl_curt_pos = SobitProMain::getJointPos("wheel_f_l_drive_joint") * 1024. / (M_PI/2.) + 2048.;
@@ -353,7 +353,7 @@ void SobitProMain::control_wheel(){
 
 // Bring Up SOBIT PRO main function
 int main(int argc, char **argv){
-    ros::init(argc, argv, "sobit_pro_sim_control");
+    ros::init(argc, argv, "sobit_pro_control");
 
     // Initialize SobitProMain class
     SobitProMain sobit_pro_main;

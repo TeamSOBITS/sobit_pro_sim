@@ -1,17 +1,17 @@
 #include "sobit_pro_sim_control/sobit_pro_sim_motor_driver.hpp"
 
 // Constructor
-SobitProMotorDriver::SobitProMotorDriver():
+SobitProSimMotorDriver::SobitProSimMotorDriver():
 baudrate_(BAUDRATE),
 protocol_version_(PROTOCOL_VERSION){
 }
 
 // Destructor
-SobitProMotorDriver::~SobitProMotorDriver(){
+SobitProSimMotorDriver::~SobitProSimMotorDriver(){
     closeDynamixel();
 }
 
-bool SobitProMotorDriver::init(){
+bool SobitProSimMotorDriver::init(){
     portHandler_   = dynamixel::PortHandler::getPortHandler(DEVICENAME);
     packetHandler_ = dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);
 
@@ -43,7 +43,7 @@ bool SobitProMotorDriver::init(){
     return true;
 }
 
-bool SobitProMotorDriver::setTorque(uint8_t id, uint8_t is_enable){
+bool SobitProSimMotorDriver::setTorque(uint8_t id, uint8_t is_enable){
     uint8_t dxl_error   = 0;
     int dxl_comm_result = COMM_TX_FAIL;
 
@@ -59,7 +59,7 @@ bool SobitProMotorDriver::setTorque(uint8_t id, uint8_t is_enable){
     return dxl_comm_result;
 }
 
-void SobitProMotorDriver::closeDynamixel(){
+void SobitProSimMotorDriver::closeDynamixel(){
     // Disable Dynamixel Torque
     setTorque(WHEEL_F_L, TORQUE_DISABLE); setTorque(WHEEL_F_R, TORQUE_DISABLE); setTorque(WHEEL_B_L, TORQUE_DISABLE); setTorque(WHEEL_B_R, TORQUE_DISABLE);
     setTorque(STEER_F_L, TORQUE_DISABLE); setTorque(STEER_F_R, TORQUE_DISABLE); setTorque(STEER_B_L, TORQUE_DISABLE); setTorque(STEER_B_R, TORQUE_DISABLE);
@@ -68,7 +68,7 @@ void SobitProMotorDriver::closeDynamixel(){
     portHandler_->closePort();
 }
 
-bool SobitProMotorDriver::controlSteersPos(int32_t *value){
+bool SobitProSimMotorDriver::controlSteersPos(int32_t *value){
     bool dxl_addparam_result_;
     int8_t dxl_comm_result_;
     uint8_t value_data_byte[4] = {0, };
@@ -121,7 +121,7 @@ bool SobitProMotorDriver::controlSteersPos(int32_t *value){
     return true;
 }
 
-bool SobitProMotorDriver::controlWheelsVel(int32_t *value){
+bool SobitProSimMotorDriver::controlWheelsVel(int32_t *value){
     bool dxl_addparam_result_;
     int8_t dxl_comm_result_;
     uint8_t value_data_byte[4] = {0, };
@@ -173,7 +173,7 @@ bool SobitProMotorDriver::controlWheelsVel(int32_t *value){
     return true;
 }
 
-bool SobitProMotorDriver::addPresentParam(){
+bool SobitProSimMotorDriver::addPresentParam(){
     // Add parameter storage for Dynamixel present position
     bool dxl_addparam_result_ = false;
 
@@ -231,7 +231,7 @@ bool SobitProMotorDriver::addPresentParam(){
     return true;
 }
 
-uint32_t SobitProMotorDriver::feedbackSteerPos(uint8_t id){
+uint32_t SobitProSimMotorDriver::feedbackSteerPos(uint8_t id){
     int dxl_comm_result_     = COMM_TX_FAIL;
     bool dxl_getdata_result_ = false;
     uint8_t dxl_error_       = 0;
@@ -256,7 +256,7 @@ uint32_t SobitProMotorDriver::feedbackSteerPos(uint8_t id){
     return steer_curr_pos_;
 }
 
-uint32_t SobitProMotorDriver::feedbackWheelPos(uint8_t id){
+uint32_t SobitProSimMotorDriver::feedbackWheelPos(uint8_t id){
     int dxl_comm_result_     = COMM_TX_FAIL;
     bool dxl_getdata_result_ = false;
     uint8_t dxl_error_       = 0;
@@ -282,7 +282,7 @@ uint32_t SobitProMotorDriver::feedbackWheelPos(uint8_t id){
 }
 
 /*
-uint32_t SobitProMotorDriver::feedbackSteerVel(uint8_t id){
+uint32_t SobitProSimMotorDriver::feedbackSteerVel(uint8_t id){
     int dxl_comm_result_     = COMM_TX_FAIL;
     bool dxl_getdata_result_ = false;
     uint8_t dxl_error_       = 0;
@@ -310,7 +310,7 @@ uint32_t SobitProMotorDriver::feedbackSteerVel(uint8_t id){
 */
 
 /*
-uint32_t SobitProMotorDriver::feedbackWheelVel(uint8_t id){
+uint32_t SobitProSimMotorDriver::feedbackWheelVel(uint8_t id){
     int dxl_comm_result_     = COMM_TX_FAIL;
     bool dxl_getdata_result_ = false;
     uint8_t dxl_error_       = 0;
