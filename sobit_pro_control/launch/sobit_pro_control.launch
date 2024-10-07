@@ -1,52 +1,20 @@
 <launch>
-    <!-- Activate Mobile-Base (true), Arm (true), Head (true) -->
-    <arg name="enable_mb"           default="true"/>
-    <arg name="enable_arm"          default="true"/>
-    <arg name="enable_head"         default="true"/>
+    <!-- Activate Mobile-Base (True), Arm (True), Head (True) -->
+    <arg name="enable_mb"       default="True" />
+    <arg name="enable_arm"      default="True" />
+    <arg name="enable_head"     default="True" />
 
-    <arg name="urdf_file"           default="$(find xacro)/xacro '$(find sobit_pro_description)/robots/sobit_pro.urdf.xacro'" />
-    <arg name="urdf_file_arm_head"  default="$(find xacro)/xacro '$(find sobit_pro_description)/robots/sobit_pro_arm_head.urdf.xacro'" />
-    <arg name="urdf_file_arm_mb"    default="$(find xacro)/xacro '$(find sobit_pro_description)/robots/sobit_pro_arm_mb.urdf.xacro'" />
-    <arg name="urdf_file_head_mb"   default="$(find xacro)/xacro '$(find sobit_pro_description)/robots/sobit_pro_head_mb.urdf.xacro'" />
-    <arg name="urdf_file_mb"        default="$(find xacro)/xacro '$(find sobit_pro_description)/robots/sobit_pro_mb.urdf.xacro'" />
-    <arg name="urdf_file_arm"       default="$(find xacro)/xacro '$(find sobit_pro_description)/robots/sobit_pro_arm.urdf.xacro'" />
-    <arg name="urdf_file_head"      default="$(find xacro)/xacro '$(find sobit_pro_description)/robots/sobit_pro_head.urdf.xacro'" />
-
+    <arg name="urdf_file" 
+         default="$(find xacro)/xacro
+                 '$(find sobit_pro_description)/robots/sobit_pro.urdf.xacro'
+                 enable_mb:=$(arg enable_mb)
+                 enable_arm:=$(arg enable_arm)
+                 enable_head:=$(arg enable_head)" />
+    
+    <param name="robot_description" command="$(arg urdf_file)"/>
 
     <!-- Load Poses -->
     <include file="$(find sobit_pro_library)/launch/load_sobit_pro_pose.launch"/>
-
-    <!-- Load URDF based on configuration -->
-    <!-- MB+ARM+HEAD -->
-    <group if="$(eval arg('enable_mb') and arg('enable_arm') and arg('enable_head') )">
-        <param name="robot_description" command="$(arg urdf_file)"/>
-    </group>
-    <!-- Only MB -->
-    <group if="$(eval arg('enable_mb') and not(arg('enable_arm')) and not(arg('enable_head')))">
-        <param name="robot_description" command="$(arg urdf_file_mb)"/>
-    </group>
-    <!-- Only ARM -->
-    <group if="$(eval not(arg('enable_mb')) and arg('enable_arm') and not(arg('enable_head')))">
-        <param name="robot_description" command="$(arg urdf_file_arm)"/>
-    </group>
-    <!-- Only HEAD -->
-    <group if="$(eval not(arg('enable_mb')) and not(arg('enable_arm')) and arg('enable_head'))">
-        <param name="robot_description" command="$(arg urdf_file_head)"/>
-    </group>
-    
-    <!-- ARM+HEAD -->
-    <group if="$(eval not(arg('enable_mb')) and arg('enable_arm') and arg('enable_head'))">
-        <param name="robot_description" command="$(arg urdf_file_arm_head)"/>
-    </group>
-    <!-- ARM+MB -->
-    <group if="$(eval arg('enable_mb') and arg('enable_arm') and not(arg('enable_head')))">
-        <param name="robot_description" command="$(arg urdf_file_arm_mb)"/>
-    </group>
-    <!-- HEAD+MB -->
-    <group if="$(eval arg('enable_mb') and not(arg('enable_arm')) and arg('enable_head'))">
-        <param name="robot_description" command="$(arg urdf_file_head_mb)"/>
-    </group>
-
 
     <!-- Load joint controller configurations from YAML file to parameter server -->
     <rosparam file="$(find sobit_pro_control)/config/joint_limit.yaml" command="load"/>
