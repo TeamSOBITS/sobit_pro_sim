@@ -29,11 +29,13 @@
 
 
   <!-- Activate Mobile-Base (true), Arm (true), Head (true) -->
-  <xacro:arg name="enable_mb"   default="True"/>
-  <xacro:arg name="enable_arm"  default="True"/>
-  <xacro:arg name="enable_head" default="True"/>
+  <xacro:arg name="enable_mb"   default="True" />
+  <xacro:arg name="enable_arm"  default="True" />
+  <xacro:arg name="enable_head" default="True" />
 
-  <xacro:arg name="enable_gz"   default="False"/>
+  <xacro:arg name="enable_gz"   default="False" />
+
+  <xacro:arg name="robot_namespace" default="sobit_pro" />
 
 
   <!-- enable_mb: true, enable_arm: true, enable_head: true -->
@@ -133,6 +135,7 @@
   <xacro:if value="${$(arg enable_gz)}">
     <gazebo>
       <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        <robotNamespace>/$(arg robot_namespace)</robotNamespace>
         <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
         <legacyModeNS>true</legacyModeNS>
       </plugin>
