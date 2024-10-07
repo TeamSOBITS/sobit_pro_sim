@@ -4,35 +4,44 @@
     <arg name="enable_arm"      default="True" />
     <arg name="enable_head"     default="True" />
 
-    <!-- URG: lan-cable (True), usb-cable (False) -->
-    <arg name="urg_lan"         default="True"/>
-
     <!-- RVIZ: launch (True), not launch (False) -->
     <arg name="enable_rviz"     default="True"/>
+
+    <!-- Enable Gazebo -->
+    <arg name="enable_gz"       default="True"/>
 
     <!-- Namespace -->
     <arg name="robot_namespace" default="sobit_pro" />
 
+    <!-- Spawn Coords -->
+    <arg name="coords"          default="-x 0 -y 0 -z 0"/>
+
+    <!-- Load URDF file -->
+    <arg name="urdf_file" 
+         default="$(find xacro)/xacro
+                 '$(find sobit_pro_sim_description)/robots/sobit_pro.urdf.xacro'
+                 enable_mb:=$(arg enable_mb)
+                 enable_arm:=$(arg enable_arm)
+                 enable_head:=$(arg enable_head)
+                 enable_gz:=$(arg enable_gz)
+                 robot_namespace:=$(arg robot_namespace)" />
+
 
     <group ns="$(arg robot_namespace)">
+        <!-- Load URDF model -->
+        <param name="robot_description" command="$(arg urdf_file)" />
+
+        <!-- Load URDF in Gazebo Simulator -->
+        <node name="spawn_model" pkg="gazebo_ros" type="spawn_model" 
+        args="-urdf -param robot_description $(arg coords) -model $(arg robot_namespace)" output="screen" />
+
         <!-- Actuators Control-->
-        <include file="$(find sobit_pro_control)/launch/sobit_pro_control.launch">
+        <include file="$(find sobit_pro_sim_control)/launch/sobit_pro_control.launch">
             <arg name="enable_mb"       value="$(arg enable_mb)"/>
             <arg name="enable_arm"      value="$(arg enable_arm)"/>
-            <arg name="enable_head"     value="$(arg enable_head)"/>       
+            <arg name="enable_head"     value="$(arg enable_head)"/>   
             <arg name="robot_namespace" value="sobit_pro" />
         </include>
-
-        <!-- URG -->
-        <include file="$(find sobit_pro_bringup)/launch/urg.launch">
-            <arg name="urg_lan"     value="$(arg urg_lan)"/>
-        </include>
-
-        <!-- Azure Kinect -->
-        <!-- <include file="$(find sobit_pro_bringup)/launch/azure_kinect.launch"/> -->
-
-        <!-- RealSense -->
-        <!-- <include file="$(find sobit_pro_bringup)/launch/realsense.launch"/> -->
 
         <!-- RVIZ -->
         <group if="$(arg enable_rviz)"> 
