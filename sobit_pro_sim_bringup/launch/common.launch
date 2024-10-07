@@ -45,7 +45,7 @@
 
         <!-- RVIZ -->
         <group if="$(arg enable_rviz)"> 
-            <node name="rviz" pkg="rviz" type="rviz" required="false" args="-d $(find sobit_pro_bringup)/rviz/sobit_pro_bringup.rviz"/>
+            <node name="rviz" pkg="rviz" type="rviz" required="false" args="-d $(find sobit_pro_sim_bringup)/rviz/sobit_pro_bringup.rviz"/>
         </group>
     </group>
 </launch>
