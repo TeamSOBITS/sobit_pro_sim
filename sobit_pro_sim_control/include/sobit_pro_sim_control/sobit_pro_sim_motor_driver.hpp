@@ -5,7 +5,7 @@
 #include <dynamixel_sdk/dynamixel_sdk.h>
 
 
-class SobitProMotorDriver{
+class SobitProSimMotorDriver{
     private:
         // Control table address (Dynamixel X-series)
         const int ADDR_X_TORQUE_ENABLE            = 64;
@@ -59,8 +59,8 @@ class SobitProMotorDriver{
         static constexpr const int DXL_MOVING_STATUS_THRESHOLD = 20; // Dynamixel moving status threshold  // old param : 10
 
 
-        SobitProMotorDriver();
-        ~SobitProMotorDriver();
+        SobitProSimMotorDriver();
+        ~SobitProSimMotorDriver();
         bool init();
         bool setTorque(uint8_t id, uint8_t is_enable);
         void closeDynamixel();
