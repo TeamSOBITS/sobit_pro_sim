@@ -6,51 +6,51 @@
 
     <!-- Namespace -->
     <arg name="robot_namespace" default="sobit_pro" />
-
-    <!-- Load URDF file -->
-    <arg name="urdf_file" 
-         default="$(find xacro)/xacro
-                 '$(find sobit_pro_description)/robots/sobit_pro.urdf.xacro'
-                 enable_mb:=$(arg enable_mb)
-                 enable_arm:=$(arg enable_arm)
-                 enable_head:=$(arg enable_head)" />
     
-    <param name="robot_description" command="$(arg urdf_file)"/>
-
     <!-- Load joint controller configurations from YAML file to parameter server -->
-    <rosparam file="$(find sobit_pro_control)/config/joint_limit.yaml" command="load"/>
+    <rosparam file="$(find sobit_pro_sim_control)/config/joint_limit.yaml" command="load"/>
 
     <!-- Load the controllers -->
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller"/>
 
     <group if="$(eval arg('enable_arm') and arg('enable_head'))">
-        <node name="arm_head_control" pkg="sobits_common" type="dynamixel_servo_control" output="screen"/>
-        <rosparam file="$(find sobit_pro_control)/config/state_control_dynamixel_arm_head.yaml"    command="load"/>
+        <!-- <node name="arm_head_control" pkg="sobits_common" type="dynamixel_servo_control" output="screen"/> -->
+        <rosparam file="$(find sobit_pro_sim_control)/config/state_control_dynamixel_arm_head.yaml"    command="load"/>
     </group>
 
     <group if="$(eval arg('enable_arm'))">
         <group if="$(eval not(arg('enable_head')))">
-            <node name="arm_head_control" pkg="sobits_common" type="dynamixel_servo_control" output="screen"/>
-            <rosparam file="$(find sobit_pro_control)/config/state_control_dynamixel_arm.yaml" command="load"/>
+            <!-- <node name="arm_head_control" pkg="sobits_common" type="dynamixel_servo_control" output="screen"/> -->
+            <rosparam file="$(find sobit_pro_sim_control)/config/state_control_dynamixel_arm.yaml" command="load"/>
         </group>
 
-        <rosparam file="$(find sobit_pro_control)/config/state_control_arm.yaml" command="load"/>
+        <rosparam file="$(find sobit_pro_sim_control)/config/ros_control_arm.yaml"    command="load"/>
+        <rosparam file="$(find sobit_pro_sim_control)/config/gz_ros_control_arm.yaml" command="load"/>
         <node name="controller_arm" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="arm_trajectory_controller"/>
     </group>
     
     <group if="$(eval arg('enable_head'))">
         <group if="$(eval not(arg('enable_arm')))">
-            <node name="arm_head_control" pkg="sobits_common" type="dynamixel_servo_control" output="screen"/>
-            <rosparam file="$(find sobit_pro_control)/config/state_control_dynamixel_head.yaml" command="load"/>
+            <!-- <node name="arm_head_control" pkg="sobits_common" type="dynamixel_servo_control" output="screen"/> -->
+            <rosparam file="$(find sobit_pro_sim_control)/config/state_control_dynamixel_head.yaml" command="load"/>
         </group>
 
-        <rosparam file="$(find sobit_pro_control)/config/state_control_head.yaml" command="load"/>
+        <rosparam file="$(find sobit_pro_sim_control)/config/ros_control_head.yaml"    command="load"/>
+        <rosparam file="$(find sobit_pro_sim_control)/config/gz_ros_control_head.yaml" command="load"/>
         <node name="controller_head" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="head_trajectory_controller"/>
     </group>
 
     <group if="$(eval arg('enable_mb'))">
-        <node name="controller_wheel" pkg="sobit_pro_control" type="sobit_pro_control" output="screen"/>
+        <rosparam file="$(find sobit_pro_sim_control)/config/ros_control_drive.yaml"    command="load"/>
+        <rosparam file="$(find sobit_pro_sim_control)/config/gz_ros_control_wheel.yaml" command="load"/>
+        <node name="controller_wheel" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="wheel_trajectory_controller"/>
+        <node name="controller_steer" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="steer_trajectory_controller"/>
+        <node name="sobit_pro_sim_control" pkg="sobit_pro_sim_control" type="sobit_pro_sim_control" output="screen"/>
     </group>
+
+    <!-- Isaac Sim only! -->
+    <!-- <node name="sobits_common_controller" pkg="sobits_common" type="dynamixel_servo_control" output="screen" /> -->
+    <!-- _______________ -->
 
     <!-- Convert joint states to TF transforms -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
