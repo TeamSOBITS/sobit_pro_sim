@@ -26,6 +26,11 @@ for ((i = 0; i < ${#ros_packages[@]}; i++)) {
     fi
 }
 
+cd urg_node/
+git fetch origin feature/multi_robot
+git checkout feature/multi_robot
+cd ..
+
 # Download ROS packages
 sudo apt-get update
 sudo apt-get install -y \
