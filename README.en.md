@@ -8,7 +8,7 @@
 [![Issues][issues-shield]][issues-url]
 [![License][license-shield]][license-url]
 
-# SOBIT PRO
+# SOBIT PRO Simulations
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -60,7 +60,7 @@
 <!-- INTRODUCTION -->
 ## Introduction
 
-![SOBIT PRO](sobit_pro/docs/img/sobit_pro.png)
+![SOBIT PRO](sobit_pro_sim/docs/img/sobit_pro.png)
 
 This is a library to operate the 4-wheel independent steering-drive mobile manipulator (SOBIT PRO) developed by SOBITS.
 
@@ -104,11 +104,11 @@ First, please set up the following environment before proceeding to the next ins
    ```
 2. Clone this repository.
    ```sh
-   $ git clone https://github.com/TeamSOBITS/sobit_pro
+   $ git clone https://github.com/TeamSOBITS/sobit_pro_sim
    ```
 3. Navigate into the repository.
    ```sh
-   $ cd sobit_pro/
+   $ cd sobit_pro_sim/
    ```
 4. Install the dependent packages.
    ```sh
@@ -127,7 +127,7 @@ First, please set up the following environment before proceeding to the next ins
 <!-- LAUNCH AND USAGE EXAMPLES -->
 ## Launch and Usage
 
-1. Set the parameters inside [minimal.launch](sobit_pro_bringup/launch/minimal.launch) and select the functions to launch with SOBIT PRO.
+1. Set the parameters inside [minimal.launch](sobit_pro_sim_bringup/launch/minimal.launch) and select the functions to launch with SOBIT PRO.
    ```xml
     <!-- Activate Mobile-Base (True), Arm (True), Head (True) -->
     <arg name="enable_mb"           default="True"/>
@@ -140,17 +140,17 @@ First, please set up the following environment before proceeding to the next ins
 > [!NOTE]
 > Rewrite it as `True` or `False` depending on the functions you want to use.
 
-2. Execute the launch file [minimal.launch](sobit_pro_bringup/launch/minimal.launch).
+2. Execute the launch file [minimal.launch](sobit_pro_sim_bringup/launch/minimal.launch).
    ```sh
-   $ roslaunch sobit_pro_bringup minimal.launch
+   $ roslaunch sobit_pro_sim_bringup minimal.launch
    ```
 3. [Optional] Let's run the demo program.
    ```sh
-   $ rosrun sobit_pro_library test_controll_wheel.py
+   $ roslaunch sobit_pro_sim_library test_control_wheel.launch
    ```
 
 > [!NOTE]
-> Check the [example](sobit_pro_library/example/) folder to become familiar with how SOBIT PRO works, and learn the working functions from each sample file.
+> Check the [example](sobit_pro_sim_library/example/) folder to become familiar with how SOBIT PRO works, and learn the working functions from each sample file.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -159,7 +159,7 @@ First, please set up the following environment before proceeding to the next ins
 
 SOBIT PRO can be moved by the moving mechanism alone.
 
-1. Rewrite [minimal.launch](sobit_pro_bringup/launch/minimal.launch) as follows
+1. Rewrite [minimal.launch](sobit_pro_sim_bringup/launch/minimal.launch) as follows
     ```xml
     <!-- Activate Mobile-Base (True), Arm (True), Head (True) -->
     <arg name="enable_mb"           default="True"/>
@@ -170,13 +170,13 @@ SOBIT PRO can be moved by the moving mechanism alone.
     <arg name="urg_lan"             default="False"/>
     ...
     ```
-2. Execute the launch file [minimal.launch](sobit_pro_bringup/launch/minimal.launch).
+2. Execute the launch file [minimal.launch](sobit_pro_sim_bringup/launch/minimal.launch).
     ```sh
-    $ roslaunch sobit_pro_bringup minimal.launch
+    $ roslaunch sobit_pro_sim_bringup minimal.launch
     ```
 3. [Optional] Let's run the demo program.
     ```sh
-    $ rosrun sobit_pro_library test_controll_wheel.py
+    $ roslaunch sobit_pro_sim_library test_control_wheel.launch
     ```
 
 > [!NOTE]
@@ -190,11 +190,11 @@ SOBIT PRO can be moved by the moving mechanism alone.
 As a preliminary step to running the actual machine, SOBIT PRO can be visualized on Rviz to display the robot's configuration.
 
 ```sh
-$ roslaunch sobit_pro_description display.launch
+$ roslaunch sobit_pro_sim_description display.launch
 ```
 
 If it works correctly, Rviz will be displayed as follows.
-![SOBIT PRO Display with Rviz](sobit_pro/docs/img/sobit_pro_display.png)
+![SOBIT PRO Display with Rviz](sobit_pro_sim/docs/img/sobit_pro_display.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -224,11 +224,11 @@ This is a summary of information for moving the pan-tilt mechanism and manipulat
     ```
 
 > [!NOTE]
-> Existing poses are found in [sobit_pro_pose.yaml](sobit_pro_library/config/sobit_pro_pose.yaml). Please refer to [How to set new poses](#how-to-set-new-poses) for how to create poses.
+> Existing poses are found in [sobit_pro_pose.yaml](sobit_pro_sim_library/config/sobit_pro_pose.yaml). Please refer to [How to set new poses](#how-to-set-new-poses) for how to create poses.
 
 2.  `moveAllJoint()` : Moves all joints to an arbitrary angle.
     ```cpp
-    bool sobit::SobitProJointController::moveAllJoint (
+    bool sobit::SobitProSimJointController::moveAllJoint (
         const double arm_shoulder_tilt_joint,       // Moving Angle [rad]
         const double arm_elbow_upper_tilt_joint,    // Moving Angle [rad]
         const double arm_elbow_lower_tilt_joint,    // Moving Angle [rad]
@@ -244,7 +244,7 @@ This is a summary of information for moving the pan-tilt mechanism and manipulat
 
 3.  `moveJoint()` : Moves a specified joint to an arbitrary angle.
     ```cpp
-    bool sobit::SobitProJointController::moveJoint (
+    bool sobit::SobitProSimJointController::moveJoint (
         const Joint joint_num,                      // Joint Number (Defined)
         const double rad,                           // Moving Angle [rad]
         const double sec = 5.0,                     // Moving Duration [s]
@@ -257,7 +257,7 @@ This is a summary of information for moving the pan-tilt mechanism and manipulat
  
 4.  `moveArm()` : Moves the robot arm joints to an arbitrary angle.
     ```cpp
-    bool sobit::SobitProJointController::moveArm(
+    bool sobit::SobitProSimJointController::moveArm(
         const double arm_shoulder_tilt_joint,       // Moving Angle [rad]
         const double arm_elbow_upper_tilt_joint,    // Moving Angle [rad]
         const double arm_elbow_lower_tilt_joint,    // Moving Angle [rad]
@@ -270,7 +270,7 @@ This is a summary of information for moving the pan-tilt mechanism and manipulat
 
 5.  `moveHeadPanTilt()` : Moves the pan-tilt mechanism to an arbitrary angle.
     ```cpp
-    bool sobit::SobitProJointController::moveHeadPanTilt(
+    bool sobit::SobitProSimJointController::moveHeadPanTilt(
         const double head_camera_pan,               // Moving Angle [rad]
         const double head_camera_tilt,              // Moving Angle [rad]
         const double sec = 5.0,                     // Moving Duration [s]
@@ -280,7 +280,7 @@ This is a summary of information for moving the pan-tilt mechanism and manipulat
 
 6.  `moveHandToTargetCoord()` : Move the hand to xyz coordinates (grasp mode).
     ```cpp
-    bool sobit::SobitProJointController::moveHandToTargetCoord(
+    bool sobit::SobitProSimJointController::moveHandToTargetCoord(
         const double target_pos_x,                  // Grasp destination x [m]
         const double target_pos_y,                  // Grasp destination y [m]
         const double target_pos_z,                  // Grasp destination z [m]
@@ -294,7 +294,7 @@ This is a summary of information for moving the pan-tilt mechanism and manipulat
 
 7.  `moveHandToTargetTF()` : Moves the hand to the tf name (grasp mode).
     ```cpp
-    bool sobit::SobitProJointController::moveHandToTargetTF(
+    bool sobit::SobitProSimJointController::moveHandToTargetTF(
         const std::string& target_name,             // Grasp Target tf name
         const double shift_x,                       // Shift the x-axis [m]
         const double shift_y,                       // Shift the y-axis [m]
@@ -306,7 +306,7 @@ This is a summary of information for moving the pan-tilt mechanism and manipulat
 
 8.  `moveHandToPlaceCoord()` : Moves the hand to xyz coordinates (placement mode).
     ```cpp
-    bool sobit::SobitProJointController::moveHandToPlaceCoord(
+    bool sobit::SobitProSimJointController::moveHandToPlaceCoord(
         const double target_pos_x,                  // Place destination x [m]
         const double target_pos_y,                  // Place destination y [m]
         const double target_pos_z,                  // Place destination z [m]
@@ -320,7 +320,7 @@ This is a summary of information for moving the pan-tilt mechanism and manipulat
 
 9.  `moveHandToPlaceTF()` : Moves the hand to the tf name (placement mode).
     ```cpp
-    bool sobit::SobitProJointController::moveHandToPlaceTF(
+    bool sobit::SobitProSimJointController::moveHandToPlaceTF(
         const std::string& target_name,             // Place Target tf name
         const double shift_x,                       // Shift the x-axis [m]
         const double shift_y,                       // Shift the y-axis [m]
@@ -332,7 +332,7 @@ This is a summary of information for moving the pan-tilt mechanism and manipulat
 
 10.  `graspDecision()` : Based on the hand current value , the grasp judgment is returned.
     ```cpp
-    bool sobit::SobitProJointController::graspDecision(
+    bool sobit::SobitProSimJointController::graspDecision(
         const int min_curr = 300,                   // Minimum current value
         const int max_curr = 1000                   // Maximum current value
     );
@@ -340,7 +340,7 @@ This is a summary of information for moving the pan-tilt mechanism and manipulat
 
 11.  `placeDecision()` : Based on the hand current value , the place judgment is returned.
     ```cpp
-    bool sobit::SobitProJointController::placeDecision(
+    bool sobit::SobitProSimJointController::placeDecision(
         const int min_curr = 500,                   // Minimum current value
         const int max_curr = 1000                   // Maximum current value
     );
@@ -371,7 +371,7 @@ The joint names of SOBIT PRO and their constants are listed below.
 
 #### How to set new poses
 
-Poses can be added and edited in the file [sobit_pro_pose.yaml](sobit_pro_library/config/sobit_pro_pose.yaml). The format is as follows:
+Poses can be added and edited in the file [sobit_pro_pose.yaml](sobit_pro_sim_library/config/sobit_pro_pose.yaml). The format is as follows:
 
 ```yaml
 sobit_pro_pose:
@@ -400,20 +400,20 @@ This is a summary of information for moving the SOBIT PRO moving mechanism.
 
 1.  `controlWheelLinear()` : Perform translational motion (straight-line, diagonal, or lateral movement).
     ```cpp
-    bool sobit::SobitProWheelController::controlWheelLinear (
+    bool sobit::SobitProSimWheelController::controlWheelLinear (
         const double distance_x,                    // Straight travel distance in x direction [m]
         const double distance_y,                    // Straight travel distance in y direction [m]
     )
     ```  
 2.  `controlWheelRotateRad()` : Perform rotational motion (method: Radian)
     ```cpp
-    bool sobit::SobitProWheelController::controlWheelRotateRad (
+    bool sobit::SobitProSimWheelController::controlWheelRotateRad (
         const double angle_rad,                     // Center Rotation Angle [rad]
     )
     ```  
 3.  `controlWheelRotateDeg()` : Perform rotational motion (method: Degree)
     ```cpp
-    bool sobit::SobitProWheelController::controlWheelRotateDeg ( 
+    bool sobit::SobitProSimWheelController::controlWheelRotateDeg ( 
         const double angle_deg,                     // Center Rotation Angle (deg)
     )
     ```
@@ -427,7 +427,7 @@ This is a summary of information for moving the SOBIT PRO moving mechanism.
 
 SOBIT PRO is available as open source hardware at [OnShape](https://cad.onshape.com/documents/4acbecde07fba120a62ec033/w/c6217b66947274dee4e8f911/e/c2e5c16292d7dfc11ee3cc01).
 
-![SOBIT PRO in OnShape](sobit_pro/docs/img/sobit_pro_onshape.png)
+![SOBIT PRO in OnShape](sobit_pro_sim/docs/img/sobit_pro_onshape.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -562,13 +562,13 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/TeamSOBITS/sobit_pro.svg?style=for-the-badge
-[contributors-url]: https://github.com/TeamSOBITS/sobit_pro/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/TeamSOBITS/sobit_pro.svg?style=for-the-badge
-[forks-url]: https://github.com/TeamSOBITS/sobit_pro/network/members
-[stars-shield]: https://img.shields.io/github/stars/TeamSOBITS/sobit_pro.svg?style=for-the-badge
-[stars-url]: https://github.com/TeamSOBITS/sobit_pro/stargazers
-[issues-shield]: https://img.shields.io/github/issues/TeamSOBITS/sobit_pro.svg?style=for-the-badge
-[issues-url]: https://github.com/TeamSOBITS/sobit_pro/issues
-[license-shield]: https://img.shields.io/github/license/TeamSOBITS/sobit_pro.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/TeamSOBITS/sobit_pro_sim.svg?style=for-the-badge
+[contributors-url]: https://github.com/TeamSOBITS/sobit_pro_sim/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/TeamSOBITS/sobit_pro_sim.svg?style=for-the-badge
+[forks-url]: https://github.com/TeamSOBITS/sobit_pro_sim/network/members
+[stars-shield]: https://img.shields.io/github/stars/TeamSOBITS/sobit_pro_sim.svg?style=for-the-badge
+[stars-url]: https://github.com/TeamSOBITS/sobit_pro_sim/stargazers
+[issues-shield]: https://img.shields.io/github/issues/TeamSOBITS/sobit_pro_sim.svg?style=for-the-badge
+[issues-url]: https://github.com/TeamSOBITS/sobit_pro_sim/issues
+[license-shield]: https://img.shields.io/github/license/TeamSOBITS/sobit_pro_sim.svg?style=for-the-badge
 [license-url]: LICENSE
