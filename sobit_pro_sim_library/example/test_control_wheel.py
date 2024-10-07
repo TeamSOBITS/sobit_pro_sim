@@ -12,6 +12,7 @@ from geometry_msgs.msg import Twist
 
 
 def test_control_wheel():
+    """
     rospy.init_node('sobit_pro_sim_test_control_wheel')
 
     pub = rospy.Publisher("/mobile_base/commands/velocity",Twist,queue_size=1)
@@ -32,8 +33,8 @@ def test_control_wheel():
     
     zero_vel = Twist()
     pub.publish(zero_vel)
-
     """
+
     args = sys.argv
     pro_wheel_ctrl = SobitProSimWheelController(args[0])
 
@@ -51,7 +52,6 @@ def test_control_wheel():
 
     del pro_wheel_ctrl
     del args
-    """
 
 if __name__ == '__main__':
     try:
