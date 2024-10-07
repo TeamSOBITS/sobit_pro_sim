@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10.2)
-project(sobit_pro_description)
+project(sobit_pro_sim_description)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)

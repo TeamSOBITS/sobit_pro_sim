@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10.2)
-project(sobit_pro_bringup)
+project(sobit_pro_sim_bringup)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -21,7 +21,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES sobit_pro_bringup
+#  LIBRARIES sobit_pro_sim_bringup
  CATKIN_DEPENDS rospy sensor_msgs geometry_msgs
 #  DEPENDS system_lib
 )

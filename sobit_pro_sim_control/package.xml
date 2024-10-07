@@ -3,7 +3,7 @@
   href="http://download.ros.org/schema/package_format3.xsd"
   schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>sobit_pro_control</name>
+  <name>sobit_pro_sim_control</name>
   <version>0.0.0</version>
   <description>
     This package allows shared configuration with SOBITS robots

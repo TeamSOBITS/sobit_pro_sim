@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10.2)
-project(sobit_pro_library)
+project(sobit_pro_sim_sim_library)
 
 cmake_policy(SET CMP0002 OLD)
 set(ALLOW_DUPLICATE_CUSTOM_TARGETS TRUE)
@@ -63,37 +63,37 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_library(${PROJECT_NAME} src/sobit_pro_joint_controller.cpp
-                            src/sobit_pro_wheel_controller.cpp)
+add_library(${PROJECT_NAME} src/sobit_pro_sim_joint_controller.cpp
+                            src/sobit_pro_sim_wheel_controller.cpp)
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
 add_dependencies(${PROJECT_NAME}  ${catkin_EXPORTED_TARGETS})
 
-pybind_add_module(sobit_pro_module MODULE src/sobit_pro_library.cpp
-                                          src/sobit_pro_joint_controller.cpp
-                                          src/sobit_pro_wheel_controller.cpp)
-add_dependencies(sobit_pro_module ${catkin_EXPORTED_TARGETS})
+pybind_add_module(sobit_pro_sim_module MODULE src/sobit_pro_sim_library.cpp
+                                          src/sobit_pro_sim_joint_controller.cpp
+                                          src/sobit_pro_sim_wheel_controller.cpp)
+add_dependencies(sobit_pro_sim_module ${catkin_EXPORTED_TARGETS})
 
 add_executable(test_control_arm example/test_control_arm.cpp
-                                src/sobit_pro_joint_controller.cpp
-                                src/sobit_pro_wheel_controller.cpp)
+                                src/sobit_pro_sim_joint_controller.cpp
+                                src/sobit_pro_sim_wheel_controller.cpp)
 target_link_libraries(test_control_arm ${catkin_LIBRARIES})
 add_dependencies(test_control_arm ${catkin_EXPORTED_TARGETS})
 
 add_executable(test_control_head example/test_control_head.cpp
-                                 src/sobit_pro_joint_controller.cpp
-                                 src/sobit_pro_wheel_controller.cpp)
+                                 src/sobit_pro_sim_joint_controller.cpp
+                                 src/sobit_pro_sim_wheel_controller.cpp)
 target_link_libraries(test_control_head ${catkin_LIBRARIES})
 add_dependencies(test_control_head ${catkin_EXPORTED_TARGETS})
 
 add_executable(test_grasp example/test_grasp.cpp
-                          src/sobit_pro_joint_controller.cpp
-                          src/sobit_pro_wheel_controller.cpp)
+                          src/sobit_pro_sim_joint_controller.cpp
+                          src/sobit_pro_sim_wheel_controller.cpp)
 target_link_libraries(test_grasp ${catkin_LIBRARIES})
 add_dependencies(test_grasp ${catkin_EXPORTED_TARGETS})
 
 add_executable(test_place example/test_place.cpp
-                          src/sobit_pro_joint_controller.cpp
-                          src/sobit_pro_wheel_controller.cpp)
+                          src/sobit_pro_sim_joint_controller.cpp
+                          src/sobit_pro_sim_wheel_controller.cpp)
 target_link_libraries(test_place ${catkin_LIBRARIES})
 add_dependencies(test_place ${catkin_EXPORTED_TARGETS})
 # add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})

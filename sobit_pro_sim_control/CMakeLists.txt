@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10.2)
-project(sobit_pro_control)
+project(sobit_pro_sim_control)
 
 ## Compile as C++14, supported in ROS Noetic and newer
 add_compile_options(-std=c++14)
@@ -50,8 +50,8 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(${PROJECT_NAME} src/sobit_pro_main.cpp
-                               src/sobit_pro_control.cpp
-                               src/sobit_pro_motor_driver.cpp
-                               src/sobit_pro_odometry.cpp)
+add_executable(${PROJECT_NAME} src/sobit_pro_sim_main.cpp
+                               src/sobit_pro_sim_control.cpp
+                               src/sobit_pro_sim_motor_driver.cpp
+                               src/sobit_pro_sim_odometry.cpp)
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
