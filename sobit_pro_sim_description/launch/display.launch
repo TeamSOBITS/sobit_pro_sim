@@ -13,10 +13,11 @@
     <!-- URDF File -->
     <arg name="urdf_file" 
          default="$(find xacro)/xacro
-                 '$(find sobit_pro_description)/robots/sobit_pro.urdf.xacro'
+                 '$(find sobit_pro_sim_description)/robots/sobit_pro.urdf.xacro'
                  enable_mb:=$(arg enable_mb)
                  enable_arm:=$(arg enable_arm)
-                 enable_head:=$(arg enable_head)" />
+                 enable_head:=$(arg enable_head)
+                 robot_namespace:=$(arg robot_namespace)" />
 
 
     <group ns="$(arg robot_namespace)">
