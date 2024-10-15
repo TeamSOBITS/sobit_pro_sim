@@ -12,6 +12,14 @@ dynamixel_port:
     - hand_joint
     - head_pan_joint
     - head_tilt_joint
+    - wheel_f_l_steer_joint
+    - wheel_f_r_steer_joint
+    - wheel_b_l_steer_joint
+    - wheel_b_r_steer_joint
+    - wheel_f_l_drive_joint
+    - wheel_f_r_drive_joint
+    - wheel_b_l_drive_joint
+    - wheel_b_r_drive_joint
 
   arm_shoulder_1_tilt_joint:    {id: 11, center: 2048, home:  1.57, mode: 3, vel: 128, acc: 0, pos_d_gain: 1300, pos_i_gain:  5, pos_p_gain: 1000, gear_ratio: 1 }
   # arm_shoulder_2_tilt_joint:    {id: 12, center: 2048, home: -1.57, mode: 3, vel: 128, acc: 0, pos_d_gain: 1300, pos_i_gain:  5, pos_p_gain: 1000, gear_ratio: 1 }
@@ -24,3 +32,13 @@ dynamixel_port:
 
   head_pan_joint:               {id: 21, center: 2048, home:  0.00, mode: 3, vel: 200, acc: 0, pos_d_gain:    0, pos_i_gain:  0, pos_p_gain:  800, gear_ratio: 1 }
   head_tilt_joint:              {id: 22, center: 2048, home:  0.00, mode: 3, vel: 200, acc: 0, pos_d_gain:    0, pos_i_gain:  0, pos_p_gain:  800, gear_ratio: 1 }
+
+  wheel_f_l_steer_joint: {id: 5, center: 2048, home:  0.00, mode: 3, vel: 200, acc: 0, pos_d_gain:    0, pos_i_gain:  0, pos_p_gain:  800, gear_ratio: 1 }
+  wheel_f_r_steer_joint: {id: 6, center: 2048, home:  0.00, mode: 3, vel: 200, acc: 0, pos_d_gain:    0, pos_i_gain:  0, pos_p_gain:  800, gear_ratio: 1 }
+  wheel_b_l_steer_joint: {id: 7, center: 2048, home:  0.00, mode: 3, vel: 200, acc: 0, pos_d_gain:    0, pos_i_gain:  0, pos_p_gain:  800, gear_ratio: 1 }
+  wheel_b_r_steer_joint: {id: 8, center: 2048, home:  0.00, mode: 3, vel: 200, acc: 0, pos_d_gain:    0, pos_i_gain:  0, pos_p_gain:  800, gear_ratio: 1 }
+  
+  wheel_f_l_drive_joint: {id: 1, center: 2048, home:  0.00, mode: 3, vel: 200, acc: 0, pos_d_gain:    0, pos_i_gain:  0, pos_p_gain:  800, gear_ratio: 1 }
+  wheel_f_r_drive_joint: {id: 2, center: 2048, home:  0.00, mode: 3, vel: 200, acc: 0, pos_d_gain:    0, pos_i_gain:  0, pos_p_gain:  800, gear_ratio: 1 }
+  wheel_b_l_drive_joint: {id: 3, center: 2048, home:  0.00, mode: 3, vel: 200, acc: 0, pos_d_gain:    0, pos_i_gain:  0, pos_p_gain:  800, gear_ratio: 1 }
+  wheel_b_r_drive_joint: {id: 4, center: 2048, home:  0.00, mode: 3, vel: 200, acc: 0, pos_d_gain:    0, pos_i_gain:  0, pos_p_gain:  800, gear_ratio: 1 }
