@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "╔══╣ Setup: SOBIT PRO (STARTING) ╠══╗"
+echo "╔══╣ Setup: SOBIT PRO Simulations (STARTING) ╠══╗"
 
 
 # Keep track of the current directory
@@ -9,11 +9,7 @@ cd ..
 
 # Download required packages for SOBIT PRO
 ros_packages=(
-    "sobit_common" \
-    "sobits_msgs" \
-    "urg_node" \
-    "azure_kinect_ros_driver" \
-    "realsense_ros"
+    "sobit_pro"
 )
 
 # Clone all packages
@@ -30,55 +26,18 @@ for ((i = 0; i < ${#ros_packages[@]}; i++)) {
     fi
 }
 
-# Download required dependencies
-sudo apt-get update
-sudo apt-get install -y \
-    mpg321 
+cd urg_node/
+git fetch origin feature/multi_robot
+git checkout feature/multi_robot
+cd ..
 
 # Download ROS packages
 sudo apt-get update
 sudo apt-get install -y \
-    ros-$ROS_DISTRO-pybind11-catkin \
-    ros-$ROS_DISTRO-robot-state-publisher \
-    ros-$ROS_DISTRO-joint-state-controller \
-    ros-$ROS_DISTRO-joint-state-publisher \
-    ros-$ROS_DISTRO-joint-state-publisher-gui \
-    ros-$ROS_DISTRO-joint-limits-interface \
-    ros-$ROS_DISTRO-hardware-interface \
-    ros-$ROS_DISTRO-transmission-interface \
-    ros-$ROS_DISTRO-controller-interface \
-    ros-$ROS_DISTRO-controller-manager \
-    ros-$ROS_DISTRO-ros-control \
-    ros-$ROS_DISTRO-ros-controllers \
-    ros-$ROS_DISTRO-tf2 \
-    ros-$ROS_DISTRO-tf2-ros \
-    ros-$ROS_DISTRO-sensor-msgs \
-    ros-$ROS_DISTRO-trajectory-msgs \
-    ros-$ROS_DISTRO-geometry-msgs \
-    ros-$ROS_DISTRO-joy
-
-
-# Setting up Dynamixel USB configuration (SOBIT PRO: Mobile Robot Mechanism)
-echo "SUBSYSTEM==\"tty\", ATTRS{idVendor}==\"0403\", ATTRS{idProduct}==\"6014\", SYMLINK+=\"input/dx_lower\", MODE=\"0666\"" | sudo tee /etc/udev/rules.d/dx_lower.rules
-
-# Setting up Dynamixel USB configuration (SOBIT PRO: Head and Arm Robot Mechanism)
-echo "SUBSYSTEM==\"tty\", ATTRS{idVendor}==\"0403\", ATTRS{idProduct}==\"6015\", SYMLINK+=\"input/dx_upper\", MODE=\"0666\"" | sudo tee /etc/udev/rules.d/dx_upper.rules
-
-# Setting up PS4 Joystick USB configuration
-echo "KERNEL==\"uinput\", MODE=\"0666\"
-      KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", ATTRS{idVendor}==\"054c\", ATTRS{idProduct}==\"05c4\", MODE=\"0666\"
-      KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", KERNELS==\"0005:054C:05C4.*\", MODE=\"0666\"
-      KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", ATTRS{idVendor}==\"054c\", ATTRS{idProduct}==\"09cc\", MODE=\"0666\"
-      KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", KERNELS==\"0005:054C:09CC.*\", MODE=\"0666\"" | sudo tee /etc/udev/rules.d/50-ds4drv.rules
-
-# Reload udev rules
-sudo udevadm control --reload-rules
-
-# Trigger the new rules
-sudo udevadm trigger
+    ros-$ROS_DISTRO-roboticsgroup-upatras-gazebo-plugins
 
 # Go back to previous directory
 cd ${DIR}
 
 
-echo "╚══╣ Setup: SOBIT PRO (FINISHED) ╠══╝"
+echo "╚══╣ Setup: SOBIT PRO Simulations (FINISHED) ╠══╝"
