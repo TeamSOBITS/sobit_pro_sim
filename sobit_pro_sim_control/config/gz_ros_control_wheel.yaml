@@ -1,0 +1,10 @@
+gazebo_ros_control:
+  pid_gains:
+    wheel_f_l_steer_joint: {p: 100,  d: 0.1, i: 1, i_clamp: 4}
+    wheel_f_r_steer_joint: {p: 100,  d: 0.1, i: 1, i_clamp: 4}
+    wheel_b_l_steer_joint: {p: 100,  d: 0.1, i: 1, i_clamp: 4}
+    wheel_b_r_steer_joint: {p: 100,  d: 0.1, i: 1, i_clamp: 4}
+    # wheel_f_l_drive_joint: {p: 100,  d: 1  , i: 1, i_clamp: 1} # Smaller 'p' term, since ff term does most of the work (Do not use if not tuned properly)
+    # wheel_f_r_drive_joint: {p: 100,  d: 1  , i: 1, i_clamp: 1} # Smaller 'p' term, since ff term does most of the work (Do not use if not tuned properly)
+    # wheel_b_l_drive_joint: {p: 100,  d: 1  , i: 1, i_clamp: 1} # Smaller 'p' term, since ff term does most of the work (Do not use if not tuned properly)
+    # wheel_b_r_drive_joint: {p: 100,  d: 1  , i: 1, i_clamp: 1} # Smaller 'p' term, since ff term does most of the work (Do not use if not tuned properly)

@@ -1,0 +1,224 @@
+<?xml version="1.0" ?>
+<robot name="sobit_pro"
+       xmlns:xacro="http://www.ros.org/wiki.xacro">
+  <xacro:macro name="mimic_joint" params="name_prefix parent_joint mimic_joint has_pid:=false multiplier:=1.0 offset:=0 sensitiveness:=0.0 max_effort:=1.0 robot_namespace:=''">
+    <gazebo>
+      <plugin name="${name_prefix}_mimic_joint_plugin" filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so">
+        <joint>${parent_joint}</joint>
+        <mimicJoint>${mimic_joint}</mimicJoint>
+        <xacro:if value="${has_pid}">                     <!-- if set to true, PID parameters from "/gazebo_ros_control/pid_gains/${mimic_joint}" are loaded -->
+          <hasPID />
+        </xacro:if>
+        <multiplier>${multiplier}</multiplier>
+        <offset>${offset}</offset>
+        <sensitiveness>${sensitiveness}</sensitiveness>   <!-- if absolute difference between setpoint and process value is below this threshold, do nothing; 0.0 = disable [rad] -->
+        <maxEffort>${max_effort}</maxEffort>              <!-- only taken into account if has_pid:=true [Nm] -->
+        <xacro:unless value="${robot_namespace == ''}">
+          <robotNamespace>${robot_namespace}</robotNamespace>
+        </xacro:unless>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="gazebo">
+    <!-- Gazebo -->
+    <gazebo>
+      <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        <robotNamespace>/$(arg robot_namespace)</robotNamespace>
+        <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+        <legacyModeNS>true</legacyModeNS>
+      </plugin>
+    </gazebo>
+
+    <!-- Mimic Joints -->
+    <xacro:mimic_joint
+      name_prefix="hand_inner_l_joint"
+      parent_joint="hand_joint"
+      mimic_joint="hand_inner_l_joint"
+      has_pid="false"
+      multiplier="-1.0"
+      max_effort="10.0"
+      robot_namespace="$(arg robot_namespace)"
+    />
+
+    <xacro:mimic_joint
+      name_prefix="hand_outer_l_joint"
+      parent_joint="hand_joint"
+      mimic_joint="hand_outer_l_joint"
+      has_pid="false"
+      multiplier="-1.0"
+      max_effort="10.0"
+      robot_namespace="$(arg robot_namespace)"
+    />
+
+    <xacro:mimic_joint
+      name_prefix="hand_outer_r_joint"
+      parent_joint="hand_joint"
+      mimic_joint="hand_outer_r_joint"
+      has_pid="false"
+      multiplier="1.0"
+      max_effort="10.0"
+      robot_namespace="$(arg robot_namespace)"
+    />
+
+    <xacro:mimic_joint
+      name_prefix="hand_finger_l_joint"
+      parent_joint="hand_joint"
+      mimic_joint="hand_finger_l_joint"
+      has_pid="false"
+      multiplier="1.0"
+      max_effort="10.0"
+      robot_namespace="$(arg robot_namespace)"
+    />
+
+    <xacro:mimic_joint
+      name_prefix="hand_finger_r_joint"
+      parent_joint="hand_joint"
+      mimic_joint="hand_finger_r_joint"
+      has_pid="false"
+      multiplier="-1.0"
+      max_effort="10.0"
+      robot_namespace="$(arg robot_namespace)"
+    />
+
+
+    <!-- Arm -->
+    <gazebo reference="arm_base_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="arm_shoulder_1_tilt_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <!-- <gazebo reference="arm_shoulder_2_tilt_link">
+      <material>Gazebo/Black</material>
+    </gazebo> -->
+    <gazebo reference="arm_elbow_upper_1_tilt_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <!-- <gazebo reference="arm_shoulder_2_tilt_link">
+      <material>Gazebo/Black</material>
+    </gazebo> -->
+    <gazebo reference="arm_elbow_lower_tilt_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="arm_elbow_lower_pan_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="arm_wrist_tilt_joint">
+      <material>Gazebo/Black</material>
+    </gazebo>
+
+    <!-- Hand -->
+    <gazebo reference="hand_base_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="hand_inner_l_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="hand_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="hand_outer_l_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="hand_outer_r_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="hand_finger_l_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="hand_finger_r_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+
+    <!-- Head -->
+    <gazebo reference="head_base_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="head_pan_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="head_tilt_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+
+    <!-- Wheel -->
+    <gazebo reference="wheel_f_l_steer_base_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="wheel_b_l_steer_base_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="wheel_b_r_steer_base_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="wheel_f_r_steer_base_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+
+    <gazebo reference="wheel_f_l_steer_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="wheel_b_l_steer_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="wheel_b_r_steer_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="wheel_f_r_steer_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+
+    <gazebo reference="wheel_f_l_drive_link">
+      <material>Gazebo/DarkGrey </material>
+    </gazebo>
+    <gazebo reference="wheel_b_l_drive_link">
+      <material>Gazebo/DarkGrey </material>
+    </gazebo>
+    <gazebo reference="wheel_b_r_drive_link">
+      <material>Gazebo/DarkGrey </material>
+    </gazebo>
+    <gazebo reference="wheel_f_r_drive_link">
+      <material>Gazebo/DarkGrey </material>
+    </gazebo>
+
+    <!-- Back -->
+    <gazebo reference="back_base_link">
+      <material>Gazebo/Grey </material>
+    </gazebo>
+
+    <!-- Cover -->
+    <gazebo reference="cover_link">
+      <material>Gazebo/Blue </material>
+    </gazebo>
+
+    <!-- Platforms -->
+    <gazebo reference="plate_bottom_link">
+      <material>Gazebo/Black </material>
+    </gazebo>
+    <gazebo reference="plate_middle_link">
+      <material>Gazebo/Black </material>
+    </gazebo>
+    <gazebo reference="plate_top_link">
+      <material>Gazebo/Black </material>
+    </gazebo>
+
+    <!-- LiDAR -->
+    <gazebo reference="lidar_base_link">
+      <material>Gazebo/Black </material>
+    </gazebo>
+    <gazebo reference="lidar_laser_mount">
+      <material>Gazebo/DarkGrey </material>
+    </gazebo>
+
+    <!-- Mic -->
+    <gazebo reference="mic_base_link">
+      <material>Gazebo/Black </material>
+    </gazebo>
+    <gazebo reference="mic_link">
+      <material>Gazebo/Black </material>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>

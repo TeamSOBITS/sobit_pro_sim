@@ -1,0 +1,10 @@
+gazebo_ros_control:
+  pid_gains:
+    arm_shoulder_1_tilt_joint:    {p: 100,  d: 0.1, i: 1, i_clamp: 4}
+    # arm_shoulder_2_tilt_joint:    {p: 100,  d: 0.1, i: 1, i_clamp: 4}
+    arm_elbow_upper_1_tilt_joint: {p: 100,  d: 0.1, i: 1, i_clamp: 4}
+    # arm_elbow_upper_2_tilt_joint: {p: 100,  d: 0.1, i: 1, i_clamp: 4}
+    arm_elbow_lower_tilt_joint:   {p: 100,  d: 0.1, i: 1, i_clamp: 4}
+    arm_elbow_lower_pan_joint:    {p: 100,  d: 0.1, i: 1, i_clamp: 4}  
+    arm_wrist_tilt_joint:         {p: 100,  d: 0.1, i: 1, i_clamp: 4}  
+    hand_joint:                   {p: 100,  d: 0.1, i: 1, i_clamp: 4}  

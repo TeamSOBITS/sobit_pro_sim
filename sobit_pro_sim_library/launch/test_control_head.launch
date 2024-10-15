@@ -1,0 +1,8 @@
+<launch>
+    <arg name="robot_namespace" default="sobit_pro_1" />
+
+    <group ns="$(arg robot_namespace)">
+        <node name="test_head" pkg="sobit_pro_sim_library" type="test_control_head.py" output="screen"/>
+    </group>
+
+</launch>
