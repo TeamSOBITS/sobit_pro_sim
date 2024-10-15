@@ -50,7 +50,7 @@
     <visual>
       <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/body/plate_bottom.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/body/plate_bottom.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -75,7 +75,7 @@
     <visual>
       <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/body/plate_middle.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/body/plate_middle.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -100,7 +100,7 @@
     <visual>
       <origin rpy="0.0 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/body/plate_top.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/body/plate_top.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -125,7 +125,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/wheel/wheel_base.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/wheel/wheel_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -150,7 +150,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/wheel/wheel_base.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/wheel/wheel_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -175,7 +175,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/wheel/wheel_base.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/wheel/wheel_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -200,7 +200,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/wheel/wheel_base.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/wheel/wheel_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -228,7 +228,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/wheel/wheel_steer.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/wheel/wheel_steer.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -256,7 +256,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/wheel/wheel_steer.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/wheel/wheel_steer.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -284,7 +284,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/wheel/wheel_steer.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/wheel/wheel_steer.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -312,7 +312,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/wheel/wheel_steer.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/wheel/wheel_steer.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -339,7 +339,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 4.7123889803850005" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/wheel/wheel_drive.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/wheel/wheel_drive.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="wheel"/>
     </visual>
@@ -366,7 +366,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 4.7123889803850005" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/wheel/wheel_drive.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/wheel/wheel_drive.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="wheel"/>
     </visual>
@@ -393,7 +393,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 4.7123889803850005" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/wheel/wheel_drive.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/wheel/wheel_drive.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="wheel"/>
     </visual>
@@ -420,7 +420,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 4.7123889803850005" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/wheel/wheel_drive.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/wheel/wheel_drive.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="wheel"/>
     </visual>
@@ -525,7 +525,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/body/cover.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/body/cover.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="blue"/>
     </visual>
@@ -550,7 +550,7 @@
     <visual>
       <origin rpy="0.0 0.0 3.14159265359" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/back/back_base.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/back/back_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="grey"/>
     </visual>
@@ -575,7 +575,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/head/head_camera_base.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/head/head_camera_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -602,7 +602,7 @@
     <visual>
       <origin rpy="0.0 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/head/head_camera_pan.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/head/head_camera_pan.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -629,7 +629,7 @@
     <visual>
       <origin rpy="0.0 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/head/head_camera_tilt.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/head/head_camera_tilt.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -674,7 +674,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 3.14159265359" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/sensor/mic_base.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/sensor/mic_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -701,7 +701,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 3.14159265359" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/sensor/mic.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/sensor/mic.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -727,7 +727,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 0.0" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/arm/arm_base.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/arm/arm_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -755,7 +755,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/arm/arm_upper.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/arm/arm_upper.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -793,7 +793,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/arm/arm_inner.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/arm/arm_inner.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -831,7 +831,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/arm/arm_elbow_lower_tilt.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/arm/arm_elbow_lower_tilt.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -859,7 +859,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/arm/arm_elbow_lower_pan.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/arm/arm_elbow_lower_pan.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -943,7 +943,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/hand/hand_base.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/hand/hand_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -970,7 +970,7 @@
     <visual>
       <origin rpy="0.0 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/hand/hand_inner_l.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/hand/hand_inner_l.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -997,7 +997,7 @@
     <visual>
       <origin rpy="0.0 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/hand/hand_inner_r.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/hand/hand_inner_r.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -1024,7 +1024,7 @@
     <visual>
       <origin rpy="0.0 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/hand/hand_outer_l.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/hand/hand_outer_l.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -1051,7 +1051,7 @@
     <visual>
       <origin rpy="0.0 0.0 1.570796326795" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/hand/hand_outer_r.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/hand/hand_outer_r.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -1078,7 +1078,7 @@
     <visual>
       <origin rpy="0.0 0.0 1.570796326795" xyz="-0.029998 0.025 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/hand/hand_finger_l.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/hand/hand_finger_l.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -1105,7 +1105,7 @@
     <visual>
       <origin rpy="0.0 0.0 1.570796326795" xyz="-0.029998 -0.025 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/hand/hand_finger_r.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/hand/hand_finger_r.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -1146,7 +1146,7 @@
     <visual>
       <origin rpy="1.570796326795 0.0 3.14159265359" xyz="0.0 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://sobit_pro_description/meshes/sensor/lidar_base.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://sobit_pro/sobit_pro_description/meshes/sensor/lidar_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -1359,7 +1359,7 @@
       <!-- the mesh origin is at front plate in between the two infrared camera axes -->
       <origin rpy="0 0 1.570795" xyz="0.0038 -0.009 0"/>
       <geometry>
-        <mesh filename="package://realsense2_description/meshes/d405.dae"/>
+        <mesh filename="package://realsense_ros/realsense2_description/meshes/d405.dae"/>
       </geometry>
     </visual>
     <collision>
