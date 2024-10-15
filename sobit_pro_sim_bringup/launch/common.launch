@@ -1,0 +1,54 @@
+<launch>
+    <!-- Activate Mobile-Base (True), Arm (True), Head (True) -->
+    <arg name="enable_mb"       default="True"/>
+    <arg name="enable_arm"      default="True"/>
+    <arg name="enable_head"     default="True"/>
+
+    <!-- RVIZ: launch (True), not launch (False) -->
+    <arg name="enable_rviz"     default="True"/>
+
+    <!-- Simulator: Gazebo(enable_gz) or Isaac(enable_isaac) -->
+    <arg name="enable_gz"       default="True"/>
+    <arg name="enable_isaac"    default="False"/>
+
+    <!-- Namespace -->
+    <arg name="robot_namespace" default="sobit_pro"/>
+
+    <!-- Spawn Coords -->
+    <arg name="coords"          default="-x 0 -y 0 -z 0"/>
+
+    <!-- Load URDF file -->
+    <arg name="urdf_file" 
+         default="$(find xacro)/xacro
+                 '$(find sobit_pro_sim_description)/robots/sobit_pro.urdf.xacro'
+                 enable_mb:=$(arg enable_mb)
+                 enable_arm:=$(arg enable_arm)
+                 enable_head:=$(arg enable_head)
+                 enable_gz:=$(arg enable_gz)
+                 robot_namespace:=$(arg robot_namespace)"/>
+
+
+    <group ns="$(arg robot_namespace)">
+        <!-- Load URDF model -->
+        <param name="robot_description" command="$(arg urdf_file)"/>
+
+        <!-- Load URDF in Gazebo Simulator -->
+        <node name="spawn_model" pkg="gazebo_ros" type="spawn_model" if="$(arg enable_gz)"
+        args="-urdf -param robot_description $(arg coords) -model $(arg robot_namespace)" output="screen"/>
+
+        <!-- Actuators Control-->
+        <include file="$(find sobit_pro_sim_control)/launch/sobit_pro_control.launch">
+            <arg name="enable_mb"       value="$(arg enable_mb)"/>
+            <arg name="enable_arm"      value="$(arg enable_arm)"/>
+            <arg name="enable_head"     value="$(arg enable_head)"/>   
+            <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+            <arg name="enable_gz"       value="$(arg enable_gz)"/>
+            <arg name="enable_isaac"    value="$(arg enable_isaac)"/>
+        </include>
+
+        <!-- RVIZ -->
+        <group if="$(arg enable_rviz)"> 
+            <node name="rviz" pkg="rviz" type="rviz" required="false" args="-d $(find sobit_pro_sim_bringup)/rviz/sobit_pro_bringup.rviz"/>
+        </group>
+    </group>
+</launch>
