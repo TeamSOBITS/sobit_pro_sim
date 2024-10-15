@@ -36,9 +36,9 @@
 
     <xacro:hokuyo_ust_mount prefix="${prefix}" parent="${prefix}_base_link" topic="scan" robot_namespace="${robot_namespace}/" model="ust-10" min_angle="-${M_PI/2}" max_angle="${M_PI/2}" >
       <!-- GZ -->
-      <origin xyz="0.067 0.0 0.0" rpy="0.0 0.0 0.0" />
+      <!-- <origin xyz="0.067 0.0 0.0" rpy="0.0 0.0 0.0" /> -->
       <!-- Isaac -->
-      <!-- <origin xyz="0.067 0.0 0.0" rpy="0.0 0.0 -${M_PI/2}" /> -->
+      <origin xyz="0.067 0.0 0.0" rpy="0.0 0.0 -${M_PI/2}" />
     </xacro:hokuyo_ust_mount>
 
   </xacro:macro>
