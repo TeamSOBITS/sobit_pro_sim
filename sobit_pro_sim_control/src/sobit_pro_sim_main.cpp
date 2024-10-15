@@ -134,7 +134,7 @@ void SobitProMain::control_wheel(){
     std::string robot_name = (ros::this_node::getNamespace() != "/")
                             ? ros::this_node::getNamespace().substr(1) + "/"
                             : "";
-    // Initilize Odometry
+    // Initilize Odometry // [NOT for Isaac Sim!]
     prev_odom.header.stamp            = ros::Time::now();
     prev_odom.header.frame_id         = robot_name + "odom";
     prev_odom.child_frame_id          = robot_name + "base_footprint";
@@ -303,7 +303,7 @@ void SobitProMain::control_wheel(){
         wheel_br_curt_pos = SobitProMain::getJointPos("wheel_b_r_drive_joint") * 1024. / (M_PI/2.) + 2048.;
 
 
-        // Calculate Odometry based on motion mode (check!)
+        // Calculate Odometry based on motion mode (check!) // [NOT for Isaac Sim!]
         sobit_pro_odometry.odom(steer_fl_curt_pos, steer_fr_curt_pos,
                                 steer_bl_curt_pos, steer_br_curt_pos,
                                 wheel_fl_curt_pos, wheel_fr_curt_pos,
@@ -320,7 +320,7 @@ void SobitProMain::control_wheel(){
         wheel_bl_init_pos = wheel_bl_curt_pos;
         wheel_br_init_pos = wheel_br_curt_pos;
 
-        // Update odom for next loop calculation
+        // Update odom for next loop calculation // [NOT for Isaac Sim!]
         prev_odom.header.stamp            = result_odom.header.stamp;
         prev_odom.pose.pose.position.x    = result_odom.pose.pose.position.x;
         prev_odom.pose.pose.position.y    = result_odom.pose.pose.position.y;
@@ -342,7 +342,7 @@ void SobitProMain::control_wheel(){
         // std::cout << "\n[ Odometry ]\n" << result_odom << std::endl;
         // std::cout << "\n[ Odometry position ]\n" << result_odom.pose.pose.position << std::endl;
         // std::cout << "\n[ Odometry orientation ]\n" << result_odom.pose.pose.orientation << std::endl;
-        sobit_pro_odometry.pose_broadcaster(result_odom); // [NOT for Isaac Sim!]
+        // sobit_pro_odometry.pose_broadcaster(result_odom); // [NOT for Isaac Sim!]
         pub_odometry.publish(result_odom);                // [NOT for Isaac Sim!]
 
         rate.sleep();
