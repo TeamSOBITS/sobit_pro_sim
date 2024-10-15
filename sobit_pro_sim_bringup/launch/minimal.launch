@@ -8,8 +8,8 @@
     <arg name="enable_rviz"     default="True"/>
 
     <!-- Simulator: Gazebo(enable_gz) or Isaac(enable_isaac) -->
-    <arg name="enable_gz"       default="True"/>
-    <arg name="enable_isaac"    default="False"/>
+    <arg name="enable_gz"       default="False"/>
+    <arg name="enable_isaac"    default="True"/>
 
     <!-- Probability of bring-up sound -->
     <param name="sound_param"   value="95"/>
