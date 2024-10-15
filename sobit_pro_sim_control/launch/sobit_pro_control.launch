@@ -17,15 +17,15 @@
     <!-- Load the controllers -->
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller"/>
 
-    <group if="$(eval arg('enable_arm') and arg('enable_head')">
-        <rosparam file="$(find sobit_pro_sim_control)/config/state_control_dynamixel_arm_head.yaml" command="load" if ="$(eval not(arg('enable_mb'))"/>
+    <group if="$(eval arg('enable_arm') and arg('enable_head'))">
+        <rosparam file="$(find sobit_pro_sim_control)/config/state_control_dynamixel_arm_head.yaml" command="load" if ="$(eval not(arg('enable_mb')))"/>
         <rosparam file="$(find sobit_pro_sim_control)/config/state_control_dynamixel_all.yaml"      command="load" if ="$(eval arg('enable_mb'))"/>
 
     </group>
 
     <group if="$(eval arg('enable_arm'))">
-        <group if="$(eval not(arg('enable_head')">
-            <rosparam file="$(find sobit_pro_sim_control)/config/state_control_dynamixel_arm.yaml"       command="load" if="$(eval not(arg('enable_mb'))"/>
+        <group if="$(eval not(arg('enable_head')))">
+            <rosparam file="$(find sobit_pro_sim_control)/config/state_control_dynamixel_arm.yaml"       command="load" if="$(eval not(arg('enable_mb')))"/>
             <rosparam file="$(find sobit_pro_sim_control)/config/state_control_dynamixel_wheel_arm.yaml" command="load" if="$(eval arg('enable_mb'))"/>
 
         </group>
@@ -36,8 +36,8 @@
     </group>
     
     <group if="$(eval arg('enable_head'))">
-        <group if="$(eval not(arg('enable_arm'))">
-            <rosparam file="$(find sobit_pro_sim_control)/config/state_control_dynamixel_head.yaml"       command="load" if="$(eval not(arg('enable_mb'))"/>
+        <group if="$(eval not(arg('enable_arm')))">
+            <rosparam file="$(find sobit_pro_sim_control)/config/state_control_dynamixel_head.yaml"       command="load" if="$(eval not(arg('enable_mb')))"/>
             <rosparam file="$(find sobit_pro_sim_control)/config/state_control_dynamixel_wheel_head.yaml" command="load" if="$(eval arg('enable_mb'))"/>
         </group>
 
