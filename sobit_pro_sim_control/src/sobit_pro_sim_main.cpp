@@ -135,39 +135,39 @@ void SobitProMain::control_wheel(){
                             ? ros::this_node::getNamespace().substr(1) + "/"
                             : "";
     // Initilize Odometry // [NOT for Isaac Sim!]
-    prev_odom.header.stamp            = ros::Time::now();
-    prev_odom.header.frame_id         = robot_name + "odom";
-    prev_odom.child_frame_id          = robot_name + "base_footprint";
-    prev_odom.pose.pose.position.x    = 0.0;
-    prev_odom.pose.pose.position.y    = 0.0;
-    prev_odom.pose.pose.position.z    = 0.0;
-    prev_odom.pose.pose.orientation.x = 0.0;
-    prev_odom.pose.pose.orientation.y = 0.0;
-    prev_odom.pose.pose.orientation.z = 0.0;
-    prev_odom.pose.pose.orientation.w = 1.0;
-    prev_odom.twist.twist.linear.x    = 0.0;
-    prev_odom.twist.twist.linear.y    = 0.0;
-    prev_odom.twist.twist.linear.z    = 0.0;
-    prev_odom.twist.twist.angular.x   = 0.0;
-    prev_odom.twist.twist.angular.y   = 0.0;
-    prev_odom.twist.twist.angular.z   = 0.0;
+    // prev_odom.header.stamp            = ros::Time::now();
+    // prev_odom.header.frame_id         = robot_name + "odom";
+    // prev_odom.child_frame_id          = robot_name + "base_footprint";
+    // prev_odom.pose.pose.position.x    = 0.0;
+    // prev_odom.pose.pose.position.y    = 0.0;
+    // prev_odom.pose.pose.position.z    = 0.0;
+    // prev_odom.pose.pose.orientation.x = 0.0;
+    // prev_odom.pose.pose.orientation.y = 0.0;
+    // prev_odom.pose.pose.orientation.z = 0.0;
+    // prev_odom.pose.pose.orientation.w = 1.0;
+    // prev_odom.twist.twist.linear.x    = 0.0;
+    // prev_odom.twist.twist.linear.y    = 0.0;
+    // prev_odom.twist.twist.linear.z    = 0.0;
+    // prev_odom.twist.twist.angular.x   = 0.0;
+    // prev_odom.twist.twist.angular.y   = 0.0;
+    // prev_odom.twist.twist.angular.z   = 0.0;
 
-    result_odom.header.stamp            = ros::Time::now();
-    result_odom.header.frame_id         = robot_name + "odom";
-    result_odom.child_frame_id          = robot_name + "base_footprint";
-    result_odom.pose.pose.position.x    = 0.0;
-    result_odom.pose.pose.position.y    = 0.0;
-    result_odom.pose.pose.position.z    = 0.0;
-    result_odom.pose.pose.orientation.x = 0.0;
-    result_odom.pose.pose.orientation.y = 0.0;
-    result_odom.pose.pose.orientation.z = 0.0;
-    result_odom.pose.pose.orientation.w = 1.0;
-    result_odom.twist.twist.linear.x    = 0.0;
-    result_odom.twist.twist.linear.y    = 0.0;
-    result_odom.twist.twist.linear.z    = 0.0;
-    result_odom.twist.twist.angular.x   = 0.0;
-    result_odom.twist.twist.angular.y   = 0.0;
-    result_odom.twist.twist.angular.z   = 0.0;
+    // result_odom.header.stamp            = ros::Time::now();
+    // result_odom.header.frame_id         = robot_name + "odom";
+    // result_odom.child_frame_id          = robot_name + "base_footprint";
+    // result_odom.pose.pose.position.x    = 0.0;
+    // result_odom.pose.pose.position.y    = 0.0;
+    // result_odom.pose.pose.position.z    = 0.0;
+    // result_odom.pose.pose.orientation.x = 0.0;
+    // result_odom.pose.pose.orientation.y = 0.0;
+    // result_odom.pose.pose.orientation.z = 0.0;
+    // result_odom.pose.pose.orientation.w = 1.0;
+    // result_odom.twist.twist.linear.x    = 0.0;
+    // result_odom.twist.twist.linear.y    = 0.0;
+    // result_odom.twist.twist.linear.z    = 0.0;
+    // result_odom.twist.twist.angular.x   = 0.0;
+    // result_odom.twist.twist.angular.y   = 0.0;
+    // result_odom.twist.twist.angular.z   = 0.0;
 
     ros::Rate rate(50);
     ros::AsyncSpinner spinner(1);
@@ -304,15 +304,15 @@ void SobitProMain::control_wheel(){
 
 
         // Calculate Odometry based on motion mode (check!) // [NOT for Isaac Sim!]
-        sobit_pro_odometry.odom(steer_fl_curt_pos, steer_fr_curt_pos,
-                                steer_bl_curt_pos, steer_br_curt_pos,
-                                wheel_fl_curt_pos, wheel_fr_curt_pos,
-                                wheel_bl_curt_pos, wheel_br_curt_pos,
-                                wheel_fl_init_pos, wheel_fr_init_pos,
-                                wheel_bl_init_pos, wheel_br_init_pos,
-                                prev_motion,
-                                prev_odom, &result_odom,
-                                prev_odom.header.stamp);
+        // sobit_pro_odometry.odom(steer_fl_curt_pos, steer_fr_curt_pos,
+        //                         steer_bl_curt_pos, steer_br_curt_pos,
+        //                         wheel_fl_curt_pos, wheel_fr_curt_pos,
+        //                         wheel_bl_curt_pos, wheel_br_curt_pos,
+        //                         wheel_fl_init_pos, wheel_fr_init_pos,
+        //                         wheel_bl_init_pos, wheel_br_init_pos,
+        //                         prev_motion,
+        //                         prev_odom, &result_odom,
+        //                         prev_odom.header.stamp);
 
         // Update the initial wheel position value for next loop calculation
         wheel_fl_init_pos = wheel_fl_curt_pos;
@@ -321,29 +321,29 @@ void SobitProMain::control_wheel(){
         wheel_br_init_pos = wheel_br_curt_pos;
 
         // Update odom for next loop calculation // [NOT for Isaac Sim!]
-        prev_odom.header.stamp            = result_odom.header.stamp;
-        prev_odom.pose.pose.position.x    = result_odom.pose.pose.position.x;
-        prev_odom.pose.pose.position.y    = result_odom.pose.pose.position.y;
-        prev_odom.pose.pose.position.z    = result_odom.pose.pose.position.z;
-        prev_odom.pose.pose.orientation.x = result_odom.pose.pose.orientation.x;
-        prev_odom.pose.pose.orientation.y = result_odom.pose.pose.orientation.y;
-        prev_odom.pose.pose.orientation.z = result_odom.pose.pose.orientation.z;
-        prev_odom.pose.pose.orientation.w = result_odom.pose.pose.orientation.w;
-        prev_odom.twist.twist.linear.x    = result_odom.twist.twist.linear.x;
-        prev_odom.twist.twist.linear.y    = result_odom.twist.twist.linear.y;
-        prev_odom.twist.twist.linear.z    = result_odom.twist.twist.linear.z;
-        prev_odom.twist.twist.angular.x   = result_odom.twist.twist.angular.x;
-        prev_odom.twist.twist.angular.y   = result_odom.twist.twist.angular.y;
-        prev_odom.twist.twist.angular.z   = result_odom.twist.twist.angular.z;
+        // prev_odom.header.stamp            = result_odom.header.stamp;
+        // prev_odom.pose.pose.position.x    = result_odom.pose.pose.position.x;
+        // prev_odom.pose.pose.position.y    = result_odom.pose.pose.position.y;
+        // prev_odom.pose.pose.position.z    = result_odom.pose.pose.position.z;
+        // prev_odom.pose.pose.orientation.x = result_odom.pose.pose.orientation.x;
+        // prev_odom.pose.pose.orientation.y = result_odom.pose.pose.orientation.y;
+        // prev_odom.pose.pose.orientation.z = result_odom.pose.pose.orientation.z;
+        // prev_odom.pose.pose.orientation.w = result_odom.pose.pose.orientation.w;
+        // prev_odom.twist.twist.linear.x    = result_odom.twist.twist.linear.x;
+        // prev_odom.twist.twist.linear.y    = result_odom.twist.twist.linear.y;
+        // prev_odom.twist.twist.linear.z    = result_odom.twist.twist.linear.z;
+        // prev_odom.twist.twist.angular.x   = result_odom.twist.twist.angular.x;
+        // prev_odom.twist.twist.angular.y   = result_odom.twist.twist.angular.y;
+        // prev_odom.twist.twist.angular.z   = result_odom.twist.twist.angular.z;
 
-        result_odom.header.stamp = ros::Time::now();
+        // result_odom.header.stamp = ros::Time::now();
 
         // Publish Odometry
         // std::cout << "\n[ Odometry ]\n" << result_odom << std::endl;
         // std::cout << "\n[ Odometry position ]\n" << result_odom.pose.pose.position << std::endl;
         // std::cout << "\n[ Odometry orientation ]\n" << result_odom.pose.pose.orientation << std::endl;
         // sobit_pro_odometry.pose_broadcaster(result_odom); // [NOT for Isaac Sim!]
-        pub_odometry.publish(result_odom);                // [NOT for Isaac Sim!]
+        // pub_odometry.publish(result_odom);                // [NOT for Isaac Sim!]
 
         rate.sleep();
     }
