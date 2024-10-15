@@ -1,11 +1,15 @@
 <launch>
     <!-- Activate Mobile-Base (True), Arm (True), Head (True) -->
-    <arg name="enable_mb"       default="True" />
-    <arg name="enable_arm"      default="True" />
-    <arg name="enable_head"     default="True" />
+    <arg name="enable_mb"       default="True"/>
+    <arg name="enable_arm"      default="True"/>
+    <arg name="enable_head"     default="True"/>
 
     <!-- RVIZ: launch (True), not launch (False) -->
     <arg name="enable_rviz"     default="True"/>
+
+    <!-- Simulator: Gazebo(enable_gz) or Isaac(enable_isaac) -->
+    <arg name="enable_gz"       default="True"/>
+    <arg name="enable_isaac"    default="False"/>
 
     <!-- Probability of bring-up sound -->
     <param name="sound_param"   value="95"/>
@@ -17,7 +21,7 @@
     <include file="$(find sobit_pro_library)/launch/load_sobit_pro_pose.launch"/>
 
     <!-- Launch Gazebo World -->
-    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <include file="$(find gazebo_ros)/launch/empty_world.launch" if="$(arg enable_gz)">
         <!-- <arg name="world_name" value="$(find aws_robomaker_small_house_world)/worlds/small_house.world"/> -->
         <arg name="debug" value="false" />
         <arg name="gui" value="true" />
@@ -33,8 +37,10 @@
         <arg name="enable_arm"      value="$(arg enable_arm)"/>
         <arg name="enable_head"     value="$(arg enable_head)"/>
         <arg name="enable_rviz"     value="$(arg enable_rviz)"/>
-        <arg name="robot_namespace" value="sobit_pro"/>
+        <arg name="robot_namespace" value="sobit_pro_1"/>
         <arg name="coords"          value="-x 0 -y 0 -z 0"/>
+        <arg name="enable_gz"       value="$(arg enable_gz)"/>
+        <arg name="enable_isaac"    value="$(arg enable_isaac)"/>
     </include>
 
     <!-- Launch robot 2 -->
@@ -45,6 +51,8 @@
         <arg name="enable_rviz"     value="$(arg enable_rviz)"/>
         <arg name="robot_namespace" value="sobit_pro_2"/>
         <arg name="coords"          value="-x 1 -y 1 -z 0"/>
+        <arg name="enable_gz"       value="$(arg enable_gz)"/>
+        <arg name="enable_isaac"    value="$(arg enable_isaac)"/>
     </include> -->
 
 </launch>
