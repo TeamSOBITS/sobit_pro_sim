@@ -1,6 +1,7 @@
 <launch>
+    <arg name="robot_namespace" default="sobit_pro_1" />
 
-    <group ns="sobit_pro">
+    <group ns="$(arg robot_namespace)">
         <node name="test_arm" pkg="sobit_pro_sim_library" type="test_control_arm.py" output="screen"/>
     </group>
 
